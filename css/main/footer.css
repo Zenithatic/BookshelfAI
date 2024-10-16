@@ -1,0 +1,32 @@
+.footer {
+    height: 120px;
+    background-color: var(--main-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px 50px;
+    border-top-style: dashed;
+    border-top-width: 2px;
+    border-top-color: white;
+}
+
+.footer a {
+    color: rgb(96, 91, 91);
+    text-decoration: none;
+    font-family: var(--afacad);
+    font-size: 20px;
+    transition: font-size 0.1s;
+}
+
+.footer a:hover {
+    color: rgb(96, 91, 91);
+    text-decoration: none;
+    font-family: var(--afacad);
+    font-size: 23px;
+    transition: font-size 0.1s;
+}
+
+.footer-github-icon {
+    height: 1em;
+    width: auto
+}

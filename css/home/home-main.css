@@ -1,0 +1,105 @@
+@keyframes icon-anim {
+    0% {
+        box-shadow: 0px 0px 30px 0px var(--main-color-transparent);
+        padding: 20px;
+    }
+
+    50% {
+        box-shadow: 0px 0px 10px 0px var(--main-color-transparent);
+        padding: 10px;
+    }
+
+    100% {
+        box-shadow: 0px 0px 30px 0px var(--main-color-transparent);
+        padding: 20px;
+    }
+}
+
+.home-welcome {
+    height: auto;
+    width: 100%;
+    margin-top: 120px;
+    padding: 50px;
+    background-image: url(../../res/home-background1.jpg);
+    background-size: cover;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 70px;
+    flex-wrap: nowrap;
+}
+
+.home-welcome-title {
+    font-family: var(--inknut);
+    font-size: 6vw;
+    color: white;
+    text-align: center;
+    background-color: var(--main-color-transparent);
+    display: inline-block;
+    line-height: 150%;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 0px 30px 0px var(--main-color-transparent);
+    user-select: none;
+}
+
+.home-welcome-title>span.home-welcome-title-AI {
+    color: var(--dark-purple-color)
+}
+
+.home-welcome-icon {
+    width: 25vw;
+    height: 25vw;
+    padding: 20px;
+    box-shadow: 0px 0px 30px 0px var(--main-color-transparent);
+    border-radius: 20px;
+    background-color: var(--main-color-transparent);
+    animation: icon-anim;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+}
+
+.home-introduction {
+    height: auto;
+    background-color: var(--main-color);
+    box-shadow: 0px 0px 30px 5px var(--main-color);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px 10px;
+    padding: 20px;
+}
+
+.home-introduction-title {
+    font-family: var(--inknut);
+    color: white;
+    font-size: max(4vw, 26px);
+    display: inline-block;
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom-style: dashed;
+    border-bottom-width: 2px;
+}
+
+.home-introduction-title>span {
+    color: var(--dark-purple-color)
+}
+
+.home-introduction-subtitle {
+    font-family: var(--afacad);
+    font-size: max(3.5vw, 25px);
+}
+
+.home-introduction>p {
+    font-family: var(--afacad);
+    color: white;
+    font-size: max(2vw, 18px);
+}
+
+.home-introduction>p>span {
+    color: var(--dark-purple-color);
+    text-shadow: 0px 0px 30px var(--dark-purple-color);
+}

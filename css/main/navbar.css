@@ -1,0 +1,148 @@
+/* Primary stuff for entire html doc */
+* {
+    box-sizing: border-box;
+    resize: none;
+}
+
+body {
+    margin: 0px;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+    background-color: aliceblue;
+}
+
+:root {
+    --main-color: rgb(75, 210, 223);
+    --main-color-transparent: rgba(75, 210, 223, 0.8);
+    --dark-purple-color: rgb(0, 0, 128);
+    --inknut: "Inknut Antiqua", system-ui;
+    --afacad: "Afacad Flux", system-ui
+}
+
+.nav-bar {
+    height: 122px;
+    width: 100vw;
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0px 0px 30px 5px var(--main-color);
+    border-bottom: 2px dashed white;
+}
+
+/* Title */
+.nav-bar-title {
+    background-color: var(--main-color);
+    float: left;
+    width: 25%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center
+}
+
+.nav-icon {
+    height: 5vw;
+    width: 5vw;
+    transition: height 0.1s, width 0.1s
+}
+
+.nav-title,
+.nav-title>span {
+    font-family: var(--inknut);
+    font-weight: 400;
+    font-size: 2.5vw;
+    font-style: normal;
+    color: aliceblue;
+    transition: font-size 0.1s
+}
+
+.nav-title>span {
+    color: var(--dark-purple-color)
+}
+
+/* Main nav */
+.nav-bar-main {
+    background-color: var(--main-color);
+    float: left;
+    width: 55%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-btn {
+    margin: 0.4vw;
+    font-family: var(--afacad);
+    font-weight: 400;
+    font-size: 2vw;
+    font-style: normal;
+    color: white;
+    transition: color 0.1s, font-size 0.1s;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.nav-btn.nav-active {
+    color: var(--dark-purple-color)
+}
+
+.nav-btn:hover {
+    margin: 0.4vw;
+    font-family: var(--afacad);
+    font-weight: 400;
+    font-size: 2.2vw;
+    font-style: normal;
+    color: var(--dark-purple-color);
+    transition: color 0.1s, font-size 0.1s;
+    text-decoration: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap
+}
+
+/* Login */
+.nav-bar-login {
+    background-color: var(--main-color);
+    float: right;
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.nav-account {
+    font-family: var(--afacad);
+    font-size: 2vw;
+    color: white;
+    background-color: rgb(0, 110, 255);
+    margin: 1.1vw;
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+    transition: color 0.1s, font-size 0.1s;
+}
+
+.nav-account:hover {
+    font-family: var(--afacad);
+    font-size: 2.2vw;
+    color: rgb(174, 197, 217);
+    background-color: rgb(0, 110, 255);
+    margin: 1.1vw;
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+    transition: color 0.1s, font-size 0.1s;
+}

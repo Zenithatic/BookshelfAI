@@ -1,0 +1,107 @@
+.about-introduction {
+    margin-top: 120px;
+    height: auto;
+    font-size: 16px;
+    background-color: var(--main-color);
+    display: flex;
+    z-index: 1;
+}
+
+.about-introduction-left {
+    width: 40%;
+    height: auto;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--main-color);
+    font-family: var(--inknut);
+    color: white;
+}
+
+.about-introduction-left h1 {
+    font-size: 4.5vw;
+    text-align: center;
+}
+
+.about-introduction-left h1>span {
+    color: var(--dark-purple-color)
+}
+
+.about-introduction-right {
+    padding: 20px;
+    font-size: 16px;
+    height: 100%;
+    width: 60%;
+    display: inline-block;
+    height: auto;
+    background-color: var(--dark-purple-color);
+    font-family: var(--afacad);
+    color: white;
+}
+
+.about-introduction-right h2 {
+    font-size: 1.7em;
+}
+
+.about-introduction-right p {
+    font-size: 1.2em;
+}
+
+.about-team {
+    background-color: var(--main-color);
+    height: auto;
+    border-top: 2px dashed white
+}
+
+.about-team h1 {
+    font-family: var(--afacad);
+    color: white;
+    text-align: center;
+    font-size: 6vw;
+}
+
+.about-team p {
+    color: white;
+    font-family: var(--afacad);
+    text-align: center;
+    font-size: 25px;
+    margin: 0px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-bottom: 50px;
+}
+
+.about-team p span {
+    color: var(--dark-purple-color)
+}
+
+.about-team h1 span {
+    color: var(--dark-purple-color)
+}
+
+.about-techstack {
+    font-family: var(--afacad);
+    background-color: var(--main-color);
+    height: auto;
+    padding: 20px;
+    border-top: 2px dashed white;
+}
+
+.about-techstack h1 {
+    color: white;
+    text-align: center;
+    font-size: 6vw;
+}
+
+.about-techstack p {
+    color: white;
+    text-align: center;
+    font-size: 25px
+}
+
+.about-techstack p span {
+    color: var(--dark-purple-color);
+    text-align: center;
+    font-size: 25px
+}

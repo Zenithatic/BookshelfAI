@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookshelfAI</title>
+    <link rel="icon" href="../res/favicon.png">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- navbar stylesheet -->
+    <link rel="stylesheet" href="../css/main/navbar.css">
+    <!-- main section stylesheet -->
+    <link rel="stylesheet" href="../css/about/about-main.css">
+    <!-- footer stylesheet -->
+    <link rel="stylesheet" href="../css/main/footer.css">
+</head>
+
+<body>
+    <header>
+        <nav class="nav-bar">
+            <div class="nav-bar-title">
+                <img src="../res/favicon.png" alt="BookshelfAI" class="nav-icon">
+                <div class="nav-title">Bookshelf<span>AI</span></div>
+            </div>
+            <div class="nav-bar-main">
+                <button class="nav-btn" data-url="../index.html">🏠Home</button>
+                <button class="nav-btn nav-active" data-url="/html/about.html">❓About</button>
+                <button class="nav-btn">📞Help</button>
+                <button class="nav-btn">🔍Search</button>
+                <button class="nav-btn">📕Bookshelf</button>
+            </div>
+            <div class="nav-bar-login">
+                <button class="nav-account">Log In</button>
+                <button class="nav-account">Sign Up</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="about-introduction">
+            <div class="about-introduction-left">
+                <h1>Why Bookshelf<span>AI</span>?</h1>
+            </div>
+            <div class="about-introduction-right">
+                <h2>Our Inspiration</h2>
+                <p>
+                    "I dedicate this app to my girlfriend, who has a deep love for books, especially romance novels, and
+                    is always on the
+                    lookout for new ones. This app simplifies the way she manages her book wishlist by allowing her to
+                    easily add new titles
+                    using the book image recognition feature, whether she's at a bookstore or anywhere else."
+                    <br><br>- Patrick, founder of BookshelfAI
+                </p>
+
+                <h2>Who this web app is for</h2>
+                <p>
+                    This app is for anyone, really, but is specifically tailored to book lovers who want an easy way to
+                    manage their own list of books. Feel free to reach out at the Help section in the navigation bar.
+                    Disclaimer: this app does not provide any actual book content itself, it only acts as a book
+                    manager, not a library.
+                </p>
+            </div>
+        </div>
+
+        <div class="about-team">
+            <h1>📋 The team behind Bookshelf<span>AI</span></h1>
+            <p>
+                At the moment, the only person working on Bookshelf<span>AI</span> is me, <span>Patrick Wang</span>. I'm
+                a first year student currently studying computer science at University of Waterloo.
+            </p>
+        </div>
+
+        <div class="about-techstack">
+            <h1>🥞 The tech stack</h1>
+            <p>
+                Bookshelf<span>AI</span>'s frontend is vanilla HTML/CSS/Javascript, with Node.js and express for the
+                backend alongside PostgreSQL for the database. One day, Bookshelf<span>AI</span> might be rebuilt with
+                Next.js.
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer">
+            <a class="footer-link" href="https://github.com/Zenithatic">
+                <img src="../res/github.png" class="footer-github-icon">My Github
+            </a>
+            <a class="footer-link" href="https://github.com/Zenithatic/BookshelfAI">↪️Link to Repository</a>
+        </div>
+    </footer>
+
+    <!-- navbar behaviour script -->
+    <script src="../js/main/nav.js"></script>
+</body>
+
+</html>
