@@ -1,0 +1,4 @@
+run frontend container
+
+$ docker build -t bookshelfai-frontend .
+$ docker run -dit --name baf -p 80:80 bookshelfai-frontend

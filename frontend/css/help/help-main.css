@@ -1,0 +1,29 @@
+.help-main {
+    margin-top: 120px;
+    background-color: var(--main-color);
+    padding: 50px;
+    font-family: var(--afacad);
+    color: white
+}
+
+.help-main h1 {
+    text-align: center;
+    font-size: 8vw;
+}
+
+.help-main h1 span {
+    color: var(--dark-purple-color)
+}
+
+.help-main h2 {
+    text-align: center;
+    font-size: 4vw;
+    border-bottom: dashed 2px white;
+}
+
+.help-main a {
+    display: block;
+    text-align: center;
+    padding: 30px;
+    font-size: 5vw;
+}
