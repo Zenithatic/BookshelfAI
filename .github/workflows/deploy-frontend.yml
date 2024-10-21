@@ -1,0 +1,37 @@
+name: Build Frontend
+
+on:
+    push:
+        branches:
+            - 'main'              # Ensure this only triggers on the 'main' branch
+        paths:
+            - 'src/**'          # Monitor changes in the 'src' directory and subdirectories
+    pull_request:
+        branches:
+            - 'main'              # Ensure the workflow triggers on pull requests targeting the 'main' branch
+        paths:
+            - 'src/**'          # Monitor changes in the 'src' directory for PRs
+
+jobs: 
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            
+            - name: Login to DockerHub
+              run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+            
+            - name: Build the docker image
+              run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend
+            
+            # test docker image for future  
+
+            - name: Push the docker image to docker hub
+              run: docker push ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest 
+
+            - name: Send request to Render to redeploy
+              run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+
+              

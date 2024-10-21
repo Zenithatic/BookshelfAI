@@ -6,6 +6,7 @@ services:
   frontend:
     build:
       context: ./frontend
+    image: zenithatic/bookshelfai-frontend:latest
     ports:
       - "80:80"
     # depends on backend
