@@ -3,14 +3,14 @@ name: Build Frontend
 on:
     push:
         branches:
-            - 'main'              # Ensure this only triggers on the 'main' branch
+            - 'main'            # Ensure this only triggers on the 'main' branch
         paths:
-            - 'src/**'          # Monitor changes in the 'src' directory and subdirectories
+            - 'frontend/**'     # Monitor changes in the 'frontend' directory and subdirectories
     pull_request:
         branches:
-            - 'main'              # Ensure the workflow triggers on pull requests targeting the 'main' branch
+            - 'main'            # Ensure the workflow triggers on pull requests targeting the 'main' branch
         paths:
-            - 'src/**'          # Monitor changes in the 'src' directory for PRs
+            - 'frontend/**'     # Monitor changes in the 'frontend' directory for PRs
 
 jobs: 
     build:
