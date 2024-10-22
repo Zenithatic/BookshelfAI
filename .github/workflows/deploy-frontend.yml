@@ -25,13 +25,27 @@ jobs:
             
             - name: Build the docker image
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend
+
+            - name: Run the docker image for tests
+              run: docker run -d --name baf -p 80:80 ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest
+
+            - name: Setup python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: '3.12'
             
-            # test docker image for future  
+            - name: Install dependencies
+              run: pip install pytest selenium
+            
+            - name: Run tests
+              run: python -m "pytest" ./frontend/python/tests
 
             - name: Push the docker image to docker hub
               run: docker push ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest 
 
             - name: Send request to Render to redeploy
               run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+            
+
 
               
