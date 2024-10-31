@@ -1,7 +1,10 @@
-version: '3.8'
-
 services:
-  # backend
+  backend:
+    build:
+      context: ./backend
+    image: zenithatic/bookshelfai-backend:latest
+    ports:
+      - "3000:3000"
 
   frontend:
     build:
@@ -9,4 +12,5 @@ services:
     image: zenithatic/bookshelfai-frontend:latest
     ports:
       - "80:80"
-    # depends on backend
+    depends_on:
+      - backend

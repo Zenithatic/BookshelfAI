@@ -22,6 +22,12 @@ jobs:
             
             - name: Login to DockerHub
               run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+
+            - name: replace server name in nginx conf file 
+              run: sed -i 's#localhost#https://bookshelfai.onrender.com/#g' ./frontend/nginx.conf
+
+            - name: replace backend proxy route in nginx conf file
+              run: sed -i 's#http://backend:3000/#https://bookshelfai-backend.onrender.com/#g' ./frontend/nginx.conf
             
             - name: Build the docker image
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend

@@ -24,6 +24,27 @@ def test_home_visual():
         title_icon = driver.find_element(by=By.CLASS_NAME, value="home-welcome-icon")
         test4 = title_icon != None and title_icon.is_displayed() and title_icon.get_attribute("width").isdigit() and int(title_icon.get_attribute("width")) > 0
 
-        assert test1 and test2 and test3 and test4
+        # test to see if footer exists and is rendered properly
+        footer = driver.find_element(by=By.CLASS_NAME, value="footer")
+        test5 = footer != None and footer.is_displayed() and footer.value_of_css_property("height") == "120px"
+
+        # test to see if github icon in footer is rendered properly
+        github_icon = driver.find_element(by=By.CLASS_NAME, value="footer-github-icon")
+        test6 = github_icon != None and github_icon.is_displayed() and github_icon.get_attribute("width").isdigit() and int(github_icon.get_attribute("width")) > 0
+
+        assert test1 and test2 and test3 and test4 and test5 and test6
+    finally:
+        driver.quit()
+
+# function to make sure nav bar is working on home page
+def test_home_nav():
+    driver = init_driver()
+    try:
+        driver.get("http://localhost:80")
+        driver.implicitly_wait(1)
+        
+        # button to make sure 
+
+        # test to make sure navigation to about page works
     finally:
         driver.quit()

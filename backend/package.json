@@ -1,0 +1,21 @@
+{
+  "name": "bookshelfai-backend",
+  "version": "1.0.0",
+  "description": "Backend server for bookshelf-ai",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js"
+  },
+  "author": "zenithatic",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

@@ -1,0 +1,37 @@
+name: Build Backend
+
+on:
+    push:
+        branches:
+            - 'main'            # Ensure this only triggers on the 'main' branch
+        paths:
+            - 'backend/**'     # Monitor changes in the 'backend' directory and subdirectories
+    pull_request:
+        branches:
+            - 'main'            # Ensure the workflow triggers on pull requests targeting the 'main' branch
+        paths:
+            - 'backend/**'     # Monitor changes in the 'backend' directory for PRs
+
+jobs: 
+    build:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            
+            - name: Login to DockerHub
+              run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+            
+            - name: Build the docker image
+              run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest ./backend
+
+            - name: Push the docker image to docker hub
+              run: docker push ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest 
+
+            - name: Send request to Render to redeploy
+              run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
+            
+
+
+              

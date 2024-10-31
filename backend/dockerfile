@@ -1,0 +1,16 @@
+FROM node:19-bullseye-slim
+
+WORKDIR /usr/src/app
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+
+RUN mkdir node_modules
+
+COPY . .
+RUN npm install
+
+# Run offline unit tests
+RUN npm test
+
