@@ -6,7 +6,7 @@ def test_home_visual():
     driver = init_driver()
 
     try:
-        driver.get("http://localhost:80")
+        driver.get("http://localhost")
         driver.implicitly_wait(1)
 
         # test to check if there are errors in console
@@ -40,7 +40,7 @@ def test_home_visual():
 def test_home_nav():
     driver = init_driver()
     try:
-        driver.get("http://localhost:80")
+        driver.get("http://localhost")
         driver.implicitly_wait(1)
         
         # button to make sure 
