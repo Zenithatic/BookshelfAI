@@ -5,21 +5,33 @@ const cors = require("cors")
 const port = 3000
 const app = express()
 app.use(helmet())
+app.use(express.json())
 
+// allow certain origins
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://bookshelfai.onrender.com");
+    const allowedOrigins = ["http://localhost", "https://bookshelfai.onrender.com"]
+    const origin = req.headers.origin
+
+    if (allowedOrigins.includes(origin)) {
+        res.header("Access-Control-Allow-Origin", origin);
+    }
+
     res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
     next();
 });
 
-app.listen(port, () => {
-    console.log("BookshelfAI Backend is listening on port 3000.");
-})
-
+// health check
 app.get("/", (req, res) => {
-
     res.json({
         response: "BookshelfAI Backend is listening on port 3000."
     })
+})
+
+// signup router
+const signup = require("./routes/signup.js")
+app.use("/signup", signup)
+
+app.listen(port, () => {
+    console.log("BookshelfAI Backend is listening on port 3000.");
 })

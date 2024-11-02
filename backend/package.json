@@ -10,10 +10,16 @@
   "author": "zenithatic",
   "license": "ISC",
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.1",
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "email-validator": "^2.0.4",
     "express": "^4.21.1",
+    "express-rate-limit": "^7.4.1",
     "helmet": "^8.0.0",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "nodemailer": "^6.9.16"
   },
   "devDependencies": {
     "jest": "^29.7.0"

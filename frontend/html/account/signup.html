@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/styles/main/navbar.css">
     <!-- footer stylesheet -->
     <link rel="stylesheet" href="/styles/main/footer.css">
+    <!-- signup stylesheet -->
+    <link rel="stylesheet" href="/styles/account/signup.css">
 
     <!-- environment variable script -->
     <script src="/js/env.js"></script>
@@ -33,7 +35,7 @@
                 <button class="nav-btn" data-url="/">🏠Home</button>
                 <button class="nav-btn" data-url="/about">❓About</button>
                 <button class="nav-btn" data-url="/help">📞Help</button>
-                <button class="nav-btn nav-active" data-url="/search">🔍Search</button>
+                <button class="nav-btn" data-url="/search">🔍Search</button>
                 <button class="nav-btn" data-url="/bookshelf">📕Bookshelf</button>
             </div>
             <div class="nav-bar-login">
@@ -44,7 +46,19 @@
     </header>
 
     <main>
-        <div style="display: inline-block; background-color: red; height: 1000px"></div>
+        <div class="background">
+            <div class="container">
+                <p>Sign Up</p>
+
+                <input type="text" name="email" id="email" placeholder="Email">
+                <button id="getEmailCode">Get verification code</button>
+                <input type="text" name="code" id="code" placeholder="Code">
+
+                <input type="password" name="password" id="password" placeholder="Password">
+                <input type="password" name="confirm" id="confirm" placeholder="Confirm Password">
+                <button id="confirmSignup">Sign Up</button>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -58,6 +72,8 @@
 
     <!-- navbar behaviour script -->
     <script src="/js/main/nav.js"></script>
+    <!-- sign up script -->
+    <script src="/js/account/signup.js"></script>
 </body>
 
 </html>

@@ -8,6 +8,7 @@
     border-top-style: dashed;
     border-top-width: 2px;
     border-top-color: white;
+    z-index: 1;
 }
 
 .footer a {
