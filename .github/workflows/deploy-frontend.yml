@@ -30,7 +30,7 @@ jobs:
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend
 
             - name: Run the docker image for tests
-              run: docker run -d --name baf -p 443:443 ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest
+              run: docker run -d --name baf -p 80:80 ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest
 
             - name: Setup python
               uses: actions/setup-python@v5
