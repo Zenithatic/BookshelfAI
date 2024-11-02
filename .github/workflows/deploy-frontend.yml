@@ -24,7 +24,7 @@ jobs:
               run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
             - name: Replace backend url in env.js
-              run: sed -i 's#http://localhost:3000/#https://bookshelfai-backend.onrender.com/#g' ./frontend/js/env.js
+              run: sed -i 's#http://localhost:3000#https://bookshelfai-backend.onrender.com#g' ./frontend/js/env.js
             
             - name: Build the docker image
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend

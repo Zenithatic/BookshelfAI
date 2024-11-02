@@ -1,0 +1,32 @@
+{
+    "books": [
+        {
+            "title": "book1",
+            "author": "author1",
+            "published": "2024",
+            "isbn": "123456789",
+            "genre": "romance, horror",
+            "cover": "https://example.com/image.jpg",
+            "summary": "a book about blah blah blah",
+            "note": "this is a note about book1",
+            "tags": [
+                "tag1",
+                "tag2"
+            ]
+        },
+        {
+            "title": "book2",
+            "author": "author2",
+            "published": "2023",
+            "isbn": "123456790",
+            "genre": "comedy",
+            "cover": "https://example.com/image2.jpg",
+            "summary": "a book2 about blah blah blah",
+            "note": "this is a note about book2",
+            "tags": [
+                "tag3",
+                "tag4"
+            ]
+        }
+    ]
+}

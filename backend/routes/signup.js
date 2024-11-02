@@ -1,18 +1,27 @@
 require("dotenv").config()
+const { rateLimit } = require("express-rate-limit")
 const express = require("express")
-const router = express.Router()
-const rateLimit = require("express-rate-limit")
 const validator = require("email-validator")
 const db = require("../db.js")
 const nodemailer = require("nodemailer")
 const bcrypt = require("bcrypt")
 
+const router = express.Router()
 
 // remove all codes after 15 min
 setInterval(async () => {
     await db.sql`DELETE FROM signup_codes`
 }, 1000 * 60 * 15);
 
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000,
+    limit: 10,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: { response: "Too many requests! Please slow down and try again in a minute." }
+})
+
+router.use(limiter)
 
 // email verification code
 router.post("/verify", async (req, res) => {
@@ -55,7 +64,7 @@ router.post("/verify", async (req, res) => {
     var mailOptions = {
         from: process.env.GMAIL_USER,
         to: email,
-        subject: "BookshelfAI Email Verification Code",
+        subject: `BookshelfAI Email Verification Code - ${generatedCode}`,
         text: `A BookshelfAI email verification code has been requested for this email. If this was not you, please ignore this email. \n\nYour code is: ${generatedCode}.`
     }
 
@@ -91,7 +100,8 @@ router.post("/makeaccount", async (req, res) => {
 
     // proceed with account creation
     const hashed = await bcrypt.hash(pass, 10)
-    await db.sql`INSERT INTO authentication VALUES (${email}, ${hashed}) `
+    await db.sql`INSERT INTO authentication VALUES (${email}, ${hashed})`
+    await db.sql`INSERT INTO user_bookshelves VALUES (${email}, ${hashed}) `
     await db.sql`DELETE FROM signup_codes WHERE email = ${email}`
 
     res.json({

@@ -9,6 +9,11 @@ const signupButton = document.getElementById("confirmSignup")
 verifyButton.addEventListener("click", async () => {
     let givenEmail = emailInput.value.trim()
 
+    if (givenEmail.length == 0) {
+        window.alert("Cannot send an empty email.")
+        return
+    }
+
     const response = await fetch(`${window.env.BACKEND_URL}/signup/verify`, {
         method: "POST",
         headers: {
