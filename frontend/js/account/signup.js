@@ -57,7 +57,7 @@ signupButton.addEventListener("click", async () => {
         }
     }
     else {
-        window.alert("Your password and confirm password do not match.")
+        window.alert("Your password and confirm password fields do not match.")
         return
     }
 })
