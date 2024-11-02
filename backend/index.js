@@ -3,6 +3,7 @@ const helmet = require("helmet")
 
 const port = 3000
 const app = express()
+app.set("trust proxy", 1)
 app.use(helmet())
 app.use(express.json())
 
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
 // health check
 app.get("/", (req, res) => {
     res.json({
-        response: "BookshelfAI Backend is listening on port 3000."
+        response: req.ip
     })
 })
 

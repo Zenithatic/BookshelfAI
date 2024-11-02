@@ -25,9 +25,9 @@ jobs:
 
             - name: Copy environment variables from repo secrets to .env
               run: | 
-                echo "DB_URL=${{ secrets.DB_URL }}}" >> ./backend/.env
-                echo "GMAIL_USER=${{ secrets.GMAIL_USER }}}" >> ./backend/.env
-                echo "GMAIL_PASS=${{secrets.GMAIL_PASS}}" >> ./backend/.env
+                echo "DB_URL=${{ secrets.DB_URL }}" >> ./backend/.env
+                echo "GMAIL_USER=${{ secrets.GMAIL_USER }}" >> ./backend/.env
+                echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> ./backend/.env
             
             - name: Build the docker image
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest ./backend
