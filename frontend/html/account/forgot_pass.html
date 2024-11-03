@@ -48,11 +48,14 @@
     <main>
         <div class="background">
             <div class="container">
-                <p>Log In</p>
+                <p>Reset Password</p>
                 <input type="text" name="email" id="email" placeholder="Email">
-                <input type="password" name="password" id="password" placeholder="Password">
-                <button id="confirmLogin">Log In</button>
-                <button id="forgotPassword">Forgot Password?</button>
+                <button id="getEmailCode">Get reset code</button>
+                <input type="text" name="code" id="code" placeholder="Code">
+
+                <input type="password" name="password" id="password" placeholder="New Password">
+                <input type="password" name="confirm" id="confirm" placeholder="Confirm Password">
+                <button id="confirmReset">Reset Password</button>
             </div>
         </div>
     </main>
@@ -68,8 +71,6 @@
 
     <!-- navbar behaviour script -->
     <script src="/js/main/nav.js"></script>
-    <!-- log in script -->
-    <script src="/js/account/login.js"></script>
 </body>
 
 </html>

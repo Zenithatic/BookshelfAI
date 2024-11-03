@@ -101,7 +101,7 @@ router.post("/makeaccount", async (req, res) => {
     // proceed with account creation
     const hashed = await bcrypt.hash(pass, 10)
     await db.sql`INSERT INTO authentication VALUES (${email}, ${hashed})`
-    await db.sql`INSERT INTO user_bookshelves VALUES (${email}, '{}') `
+    await db.sql`INSERT INTO user_bookshelves VALUES (${email}, '{ "books": [] }') `
     await db.sql`DELETE FROM signup_codes WHERE email = ${email}`
 
     res.json({
