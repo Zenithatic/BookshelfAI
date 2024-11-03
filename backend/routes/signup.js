@@ -15,7 +15,7 @@ setInterval(async () => {
 
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000,
-    limit: 10,
+    limit: 20,
     standardHeaders: true,
     legacyHeaders: false,
     message: { response: "Too many requests! Please slow down and try again in a minute." }
@@ -101,7 +101,7 @@ router.post("/makeaccount", async (req, res) => {
     // proceed with account creation
     const hashed = await bcrypt.hash(pass, 10)
     await db.sql`INSERT INTO authentication VALUES (${email}, ${hashed})`
-    await db.sql`INSERT INTO user_bookshelves VALUES (${email}, ${hashed}) `
+    await db.sql`INSERT INTO user_bookshelves VALUES (${email}, ${JSON.stringify({})}) `
     await db.sql`DELETE FROM signup_codes WHERE email = ${email}`
 
     res.json({
