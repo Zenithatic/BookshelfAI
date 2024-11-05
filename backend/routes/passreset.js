@@ -5,13 +5,13 @@ const validator = require("email-validator")
 const db = require("../db.js")
 const nodemailer = require("nodemailer")
 const bcrypt = require("bcrypt")
-const { v4: uuidv4 } = require('uuid');
+const { v4: uuidv4 } = require("uuid")
 
 const router = express.Router()
 
 // remove all codes after 15 min
 setInterval(async () => {
-    await db.sql`DELETE FROM signup_codes`
+    await db.sql`DELETE FROM password_change_codes`
 }, 1000 * 60 * 15);
 
 const limiter = rateLimit({
@@ -24,8 +24,7 @@ const limiter = rateLimit({
 
 router.use(limiter)
 
-// email verification code
-router.post("/verify", async (req, res) => {
+router.post("/getcode", async (req, res) => {
     // validate request body
     if (req.body === null || req.body.email === null) {
         req.json({
@@ -44,12 +43,12 @@ router.post("/verify", async (req, res) => {
         return
     }
 
-    // make sure email doesn't already belong to an user
+    // make sure email exists in authentication table
     let queryResult = await db.sql`SELECT * FROM authentication WHERE email = ${email}`
 
-    if (!queryResult.length == 0) {
+    if (queryResult.length == 0) {
         res.json({
-            response: "This Email already belongs to another user."
+            response: "This Email is not associated with an account."
         })
         return
     }
@@ -58,8 +57,8 @@ router.post("/verify", async (req, res) => {
     let generatedCode = 100000 + Math.floor(Math.random() * 900000)
 
     // save code to db
-    await db.sql`DELETE FROM signup_codes WHERE email = ${email}`
-    await db.sql`INSERT INTO signup_codes VALUES (${email}, ${generatedCode})`
+    await db.sql`DELETE FROM password_change_codes WHERE email = ${email}`
+    await db.sql`INSERT INTO password_change_codes VALUES (${email}, ${generatedCode})`
 
     // send email
     let transporter = nodemailer.createTransport({
@@ -73,8 +72,8 @@ router.post("/verify", async (req, res) => {
     var mailOptions = {
         from: process.env.GMAIL_USER,
         to: email,
-        subject: `BookshelfAI Email Verification Code - ${generatedCode}`,
-        text: `A BookshelfAI email verification code has been requested for this email. If this was not you, please ignore this email. \n\nYour code is: ${generatedCode}.`
+        subject: `BookshelfAI Password Reset Code - ${generatedCode}`,
+        text: `A BookshelfAI password reset code has been requested for this email. If this was not you, please ignore this email. \n\nYour code is: ${generatedCode}.`
     }
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -91,8 +90,7 @@ router.post("/verify", async (req, res) => {
 })
 
 
-// account creation endpoint
-router.post("/makeaccount", async (req, res) => {
+router.post("/reset", async (req, res) => {
     // validate request body
     if (req.body === null || req.body.email === null || req.body.code === null || req.body.pass === null) {
         req.json({
@@ -106,27 +104,24 @@ router.post("/makeaccount", async (req, res) => {
     const pass = String(req.body.pass)
 
     // check if code is valid
-    let queryResult = await db.sql`SELECT * FROM signup_codes WHERE email = ${email}`
+    let queryResult = await db.sql`SELECT * FROM password_change_codes WHERE email = ${email}`
 
     if (queryResult.length == 0 || String(queryResult[0].code) !== code) {
         res.json({
-            response: "Invalid code. Either you have not requested a code, you have used an email that belongs to someone else, or you have inputted the wrong code."
+            response: "Invalid code. Either you have not requested a code, you have inputted the wrong email, or you have inputted the wrong code."
         })
         return
     }
 
-    // proceed with account creation
+    // proceed with password update
     const hashed = await bcrypt.hash(pass, 10)
-    const jwtcode = uuidv4()
-    await db.sql`INSERT INTO authentication VALUES (${email}, ${hashed}, ${jwtcode})`
-    await db.sql`INSERT INTO user_bookshelves VALUES (${email}, '{ "books": [] }')`
-    await db.sql`DELETE FROM signup_codes WHERE email = ${email}`
+    const newjwtcode = uuidv4()
+    await db.sql`UPDATE authentication SET password = ${hashed}, jwtcode = ${newjwtcode} WHERE email = ${email}`
+    await db.sql`DELETE FROM password_change_codes WHERE email = ${email}`
 
     res.json({
-        response: `Account successfully created with email ${email}.`
+        response: `Password successfully changed for email ${email}.`
     })
 })
 
 module.exports = router
-
-

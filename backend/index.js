@@ -32,6 +32,14 @@ app.get("/", (req, res) => {
 const signup = require("./routes/signup.js")
 app.use("/signup", signup)
 
+// password reset router
+const passreset = require("./routes/passreset.js")
+app.use("/passreset", passreset)
+
+// login router
+const login = require("./routes/login.js")
+app.use("/login", login)
+
 app.listen(port, () => {
     console.log("BookshelfAI Backend is listening on port 3000.");
 })

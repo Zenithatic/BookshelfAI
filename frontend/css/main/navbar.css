@@ -65,24 +65,28 @@ body {
 
 /* Main nav */
 .nav-bar-main {
+    justify-content: space-evenly;
     background-color: var(--main-color);
     float: left;
     width: 55%;
     height: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
     align-items: center;
+    overflow-x: scroll;
+    white-space: nowrap;
+    scrollbar-width: auto;
+    scrollbar-color: var(--dark-purple-color) transparent;
 }
 
 .nav-btn {
     margin: 0.4vw;
     font-family: var(--afacad);
     font-weight: 400;
-    font-size: 2vw;
+    font-size: 30px;
     font-style: normal;
     color: white;
-    transition: color 0.1s, font-size 0.1s;
+    transition: color 0.1s;
     text-decoration: none;
     background-color: transparent;
     border: none;
@@ -96,19 +100,8 @@ body {
 }
 
 .nav-btn:hover {
-    margin: 0.4vw;
-    font-family: var(--afacad);
-    font-weight: 400;
-    font-size: 2.2vw;
-    font-style: normal;
     color: var(--dark-purple-color);
-    transition: color 0.1s, font-size 0.1s;
-    text-decoration: none;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    user-select: none;
-    white-space: nowrap
+    transition: color 0.1s;
 }
 
 /* Login */
