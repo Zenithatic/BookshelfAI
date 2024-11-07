@@ -2,11 +2,10 @@ require("dotenv").config()
 const validateJWT = require("../middleware/validateJWT.js")
 const { rateLimit } = require("express-rate-limit")
 const express = require("express")
-const validator = require("email-validator")
 const db = require("../db.js")
-const nodemailer = require("nodemailer")
 const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken")
+const { v4: uuidv4 } = require("uuid")
 
 const router = express.Router()
 
@@ -69,7 +68,17 @@ router.post("/authenticate", async (req, res) => {
 
 router.post("/verifyjwt", validateJWT, async (req, res) => {
     res.json({
-        response: `Valid credentials. Logged in as ${req.email}`
+        response: `Valid credentials. Logged in as ${req.email}`,
+        email: req.email
+    })
+})
+
+router.post("/signout", validateJWT, async (req, res) => {
+    const newJwtCode = uuidv4()
+    await db.sql`UPDATE authentication SET jwtcode = ${newJwtCode} WHERE email = ${String(req.email)}`
+
+    res.json({
+        response: "Signout successful."
     })
 })
 

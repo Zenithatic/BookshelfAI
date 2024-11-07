@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BookshelfAI</title>
+    <link rel="icon" href="/res/favicon.png">
+
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- navbar stylesheet -->
+    <link rel="stylesheet" href="/styles/main/navbar.css">
+    <!-- footer stylesheet -->
+    <link rel="stylesheet" href="/styles/main/footer.css">
+    <!-- main stylesheet -->
+    <link rel="stylesheet" href="/styles/account/account.css">
+
+    <!-- environment variable script -->
+    <script src="/js/env.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="nav-bar">
+            <div class="nav-bar-title">
+                <img src="/res/favicon.png" alt="BookshelfAI" class="nav-icon">
+                <div class="nav-title">Bookshelf<span>AI</span></div>
+            </div>
+            <div class="nav-bar-main">
+                <button class="nav-btn" data-url="/">🏠Home</button>
+                <button class="nav-btn" data-url="/about">❓About</button>
+                <button class="nav-btn" data-url="/help">📞Help</button>
+                <button class="nav-btn" data-url="/search">🔍Search</button>
+                <button class="nav-btn" data-url="/bookshelf">📕Bookshelf</button>
+            </div>
+            <div class="nav-bar-login">
+                <button class="nav-account">Log In</button>
+                <button class="nav-account">Sign Up</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="background">
+            <div class="container">
+                <p>Sign Out</p>
+                <button id="sign-out" title="Sign out of this device">Sign out</button>
+                <button id="sign-out-all" title="Sign out of all devices">Global sign out</button>
+                <button id="back" title="Go back">Back</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer">
+            <a class="footer-link" href="https://github.com/Zenithatic">
+                <img src="/res/github.png" class="footer-github-icon" title="githubicon">My Github
+            </a>
+            <a class="footer-link" href="https://github.com/Zenithatic/BookshelfAI">↪️Link to Repository</a>
+        </div>
+    </footer>
+
+    <!-- navbar behaviour script -->
+    <script src="/js/main/nav.js"></script>
+    <!-- signout script -->
+    <script src="/js/account/signout.js"></script>
+</body>
+
+</html>

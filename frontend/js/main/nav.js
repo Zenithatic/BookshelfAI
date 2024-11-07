@@ -1,5 +1,6 @@
 // Navigation behavior
 const nav_btns = document.getElementsByClassName("nav-btn")
+const login_sec = document.getElementsByClassName("nav-bar-login")[0]
 const login_btn = document.getElementsByClassName("nav-account")[0]
 const signup_btn = document.getElementsByClassName("nav-account")[1]
 
@@ -27,5 +28,29 @@ signup_btn.addEventListener("click", () => {
         window.location.href = "/signup"
     }
 })
+
+async function checkLogin() {
+    // check if user is logged in
+    if (localStorage.getItem("jwt") !== null) {
+        // switch login/signup button with signout button
+        let signoutBtn = document.createElement("button")
+        signoutBtn.classList.add("nav-account")
+        signoutBtn.textContent = "Sign Out"
+
+        signoutBtn.addEventListener("click", () => {
+            window.location.href = "/signout"
+        })
+
+        login_sec.innerHTML = ""
+        login_sec.appendChild(signoutBtn)
+    }
+    else {
+        console.log("no jwt")
+    }
+}
+
+checkLogin()
+
+
 
 
