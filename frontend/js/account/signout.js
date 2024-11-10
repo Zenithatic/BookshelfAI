@@ -3,7 +3,8 @@ const signOutAll = document.getElementById("sign-out-all")
 const back = document.getElementById("back")
 
 signOut.addEventListener("click", () => {
-    localStorage.removeItem("jwt")
+    // remove data from localstorage
+    localStorage.clear()
     window.location.href = "/login"
 })
 
@@ -17,8 +18,8 @@ signOutAll.addEventListener("click", async () => {
         },
     })
 
-    // remove jwt from localstorage
-    localStorage.removeItem("jwt")
+    // remove data from localstorage
+    localStorage.clear()
 
     const data = await response.json()
 

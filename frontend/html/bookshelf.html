@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/styles/main/navbar.css">
     <!-- footer stylesheet -->
     <link rel="stylesheet" href="/styles/main/footer.css">
+    <!-- bookshelf stylesheet -->
+    <link rel="stylesheet" href="/styles/bookshelf/bookshelf.css">
 
     <!-- environment variable script -->
     <script src="/js/env.js"></script>
@@ -44,7 +46,59 @@
     </header>
 
     <main>
-        <div style="display: inline-block; background-color: red; height: 1000px"></div>
+        <div class="background">
+            <div class="container">
+                <h1 id="bookshelf-title">Bookshelf: 0 Books</h1>
+                <div class="search-container">
+                    <div class="search-row">
+                        <input type="text" name="title" id="title" placeholder="Title">
+                        <input type="text" name="author" id="author" placeholder="Author">
+                    </div>
+                    <div class="search-row">
+                        <input type="text" name="published" id="published" placeholder="Published">
+                        <input type="text" name="genre" id="genre" placeholder="Genre">
+                    </div>
+                    <div class="search-row">
+                        <input type="text" name="summary" id="summary" placeholder="Summary">
+                        <input type="text" name="tags" id="tags" placeholder="Tags">
+                    </div>
+                    <div class="search-row">
+                        <button id="search">Search</button>
+                        <button id="reset">Reset</button>
+                    </div>
+                </div>
+
+                <div class="book-container" id="book-container">
+                    <!-- 
+                    <div class="book">
+                        <div class="upper">
+                            <img width="100px"
+                                src="https://blog.udemy.com/wp-content/uploads/2014/05/bigstock-test-icon-63758263.jpg">
+                            <h2 class="title">Title: Blah</h2>
+                        </div>
+                        <div class="lower">
+                            <p class="author">Author: Joe</p>
+                            <p class="published">Published: 2024</p>
+                            <p class="isbn">ISBN: 123</p>
+                            <p class="genre">Genre: Horror</p>
+                            <p class="summary">Summary: ...</p>
+                            <p class="tags">Tags: tag1 tag2</p>
+                        </div>
+                        <div class="options">
+                            <button class="modify edit">Edit</button>
+                            <button class="modify delete">Delete</button>
+                        </div>
+                    </div>
+                    -->
+                </div>
+
+                <div class="bookshelf-nav">
+                    <button id="previous">Previous</button>
+                    <p id="current">Current:</p>
+                    <button id="next">Next</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -58,6 +112,8 @@
 
     <!-- navbar behaviour script -->
     <script src="/js/main/nav.js"></script>
+    <!-- bookshelf script -->
+    <script src="/js/bookshelf/bookshelf.js" defer></script>
 </body>
 
 </html>

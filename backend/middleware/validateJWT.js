@@ -7,7 +7,16 @@ const validateJWT = async (req, res, next) => {
 
     // validate jwt
     if (typeof header !== "undefined") {
-        const token = header.split(" ")[1]
+        let token
+
+        // see if token is empty/null
+        try {
+            token = header.split(" ")[1]
+        } catch (error) {
+            res.json({
+                response: "Invalid credentials. Try logging in again, or clearing your cache if that does not work."
+            })
+        }
 
         // make sure jwt is valid
         jwt.verify(token, process.env.JWT_KEY, async (err, payload) => {

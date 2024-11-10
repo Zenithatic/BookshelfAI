@@ -6,13 +6,10 @@
             "published": "2024",
             "isbn": "123456789",
             "genre": "romance, horror",
-            "cover": "https://example.com/image.jpg",
+            "cover": "https://th.bing.com/th/id/OIP.4XB8NF1awQyApnQDDmBmQwHaEo?rs=1&pid=ImgDetMain",
             "summary": "a book about blah blah blah",
-            "note": "this is a note about book1",
-            "tags": [
-                "tag1",
-                "tag2"
-            ]
+            "tags": "tag1 tag2",
+            "dateadded": "1"
         },
         {
             "title": "book2",
@@ -20,13 +17,10 @@
             "published": "2023",
             "isbn": "123456790",
             "genre": "comedy",
-            "cover": "https://example.com/image2.jpg",
+            "cover": "https://th.bing.com/th/id/OIP.4XB8NF1awQyApnQDDmBmQwHaEo?rs=1&pid=ImgDetMain",
             "summary": "a book2 about blah blah blah",
-            "note": "this is a note about book2",
-            "tags": [
-                "tag3",
-                "tag4"
-            ]
+            "tags": "tag1 tag2",
+            "dateadded": "2"
         }
     ]
 }

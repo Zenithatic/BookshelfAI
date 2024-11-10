@@ -40,6 +40,10 @@ app.use("/passreset", passreset)
 const login = require("./routes/login.js")
 app.use("/login", login)
 
+// bookshelf router
+const bookshelf = require("./routes/bookshelf.js")
+app.use("/bookshelf", bookshelf)
+
 app.listen(port, () => {
     console.log("BookshelfAI Backend is listening on port 3000.");
 })

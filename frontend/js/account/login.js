@@ -29,9 +29,10 @@ loginButton.addEventListener("click", async () => {
 
     window.alert(data.response)
 
-    // store new jwt in localStorage
+    // store new jwt in localStorage, clear old bookshelf
     if (data.response.startsWith("Success")) {
         localStorage.setItem("jwt", data.jwt)
-        window.location.href = "/bookshelf"
+        localStorage.removeItem("bookshelf")
+        window.location.href = "/"
     }
 })

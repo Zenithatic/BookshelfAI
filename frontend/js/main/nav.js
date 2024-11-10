@@ -1,3 +1,4 @@
+
 // Navigation behavior
 const nav_btns = document.getElementsByClassName("nav-btn")
 const login_sec = document.getElementsByClassName("nav-bar-login")[0]
@@ -49,8 +50,32 @@ async function checkLogin() {
     }
 }
 
-checkLogin()
+async function loadBookshelf() {
+    // check if bookshelf is not cached
+    if (localStorage.getItem("bookshelf") === null && localStorage.getItem("jwt") !== null) {
+        const response = await fetch(`${window.env.BACKEND_URL}/bookshelf/getbookshelf`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        })
 
+        const data = await response.json()
+
+        if (data.response.startsWith("Successful")) {
+            localStorage.setItem("bookshelf", data.bookshelf)
+        }
+        else {
+            window.alert("Invalid credentials. Please try re-logging in.")
+            window.location.href = "/signout"
+        }
+    }
+}
+
+// update signout navbar if user is signed in and update bookshelf
+checkLogin()
+loadBookshelf()
 
 
 
