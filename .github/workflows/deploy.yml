@@ -1,16 +1,13 @@
-name: Build Frontend
+name: Build Application
 
 on:
     push:
         branches:
             - 'main'            # Ensure this only triggers on the 'main' branch
-        paths:
-            - 'frontend/**'     # Monitor changes in the 'frontend' directory and subdirectories
+
     pull_request:
         branches:
             - 'main'            # Ensure the workflow triggers on pull requests targeting the 'main' branch
-        paths:
-            - 'frontend/**'     # Monitor changes in the 'frontend' directory for PRs
 
 jobs: 
     build:
@@ -23,14 +20,27 @@ jobs:
             - name: Login to DockerHub
               run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
-            - name: Replace backend url in env.js
+            - name: Replace backend url in env.js for frontend
               run: sed -i 's#http://localhost:3000#https://bookshelfai-backend.onrender.com#g' ./frontend/js/env.js
-            
-            - name: Build the docker image
-              run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend
 
-            - name: Run the docker image for tests
+            - name: Copy environment variables from repo secrets to .env for backend
+              run: | 
+                echo "DB_URL=${{ secrets.DB_URL }}" >> ./backend/.env
+                echo "GMAIL_USER=${{ secrets.GMAIL_USER }}" >> ./backend/.env
+                echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> ./backend/.env
+                echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> ./backend/.env
+            
+            - name: Build the frontend docker image
+              run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend
+            
+            - name: Build the backend docker image
+              run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest ./backend
+
+            - name: Run the frontend docker image for tests
               run: docker run -d --name baf -p 80:80 ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest
+
+            - name: Run the backend docker image for tests
+              run: docker run -d --name bab -p 3000:3000 ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest
 
             - name: Setup python
               uses: actions/setup-python@v5
@@ -43,10 +53,16 @@ jobs:
             - name: Run tests
               run: python -m "pytest" ./frontend/python/tests
 
-            - name: Push the docker image to docker hub
+            - name: Push the frontend docker image to docker hub
               run: docker push ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest 
 
-            - name: Send request to Render to redeploy
+            - name: Push the backend docker image to docker hub
+              run: docker push ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest 
+
+            - name: Send request to Render to redeploy backend
+              run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
+
+            - name: Send request to Render to redeploy frontend
               run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
             
 

@@ -58,7 +58,6 @@ function bookshelfRenderer() {
                 else if (event.target.classList.contains("delete")) {
                     const toDelete = event.target.parentElement.parentElement
                     const dateadded = toDelete.id
-                    console.log(dateadded)
 
                     let bookList = bookshelf.books.filter((book) => {
                         if (String(book.dateadded) !== String(dateadded)) {
@@ -84,9 +83,6 @@ function bookshelfRenderer() {
                     const data = await response.json()
                     if (!data.response.startsWith("Successful")) {
                         window.alert("An error has occurred, your bookshelf has not been updated in the server")
-                    }
-                    else {
-                        window.alert("successful update")
                     }
 
                     // re-render books
@@ -120,6 +116,7 @@ function bookshelfRenderer() {
 
     function render() {
         bookContainer.innerHTML = ""
+        title.textContent = `Bookshelf: ${bookshelfLength} Books`
         for (let i = 0; i < Math.min(20, bookshelfLength - currentPage * pageSize); i++) {
             let newBookIndex = i + currentPage * pageSize
             let newBookData = books[newBookIndex]
