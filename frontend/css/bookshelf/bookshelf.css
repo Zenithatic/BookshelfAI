@@ -157,3 +157,70 @@
     text-align: center;
     white-space: nowrap;
 }
+
+.edit-book {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    gap: 20px;
+    max-width: 380px;
+
+}
+
+.edit-book p {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-family: var(--afacad);
+    width: 300px;
+}
+
+.edit-book input {
+    color: black;
+    font-size: 20px;
+    font-family: var(--afacad);
+    width: 300px;
+}
+
+.edit-book button {
+    background-color: var(--dark-purple-color);
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: var(--afacad);
+    width: 300px;
+}
+
+.bookshelf-add {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    gap: 20px;
+    max-width: 380px;
+}
+
+.bookshelf-add p {
+    text-align: center;
+    color: white;
+    font-size: 30px;
+    font-family: var(--afacad);
+    width: 300px;
+}
+
+.bookshelf-add input {
+    color: black;
+    font-size: 20px;
+    font-family: var(--afacad);
+    width: 300px;
+}
+
+.bookshelf-add button {
+    background-color: var(--dark-purple-color);
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+    font-family: var(--afacad);
+    width: 300px;
+}
