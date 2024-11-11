@@ -8,7 +8,7 @@
 
 .help-main h1 {
     text-align: center;
-    font-size: 8vw;
+    font-size: 80px;
 }
 
 .help-main h1 span {
@@ -17,13 +17,12 @@
 
 .help-main h2 {
     text-align: center;
-    font-size: 4vw;
-    border-bottom: dashed 2px white;
+    font-size: 40px;
 }
 
 .help-main a {
     display: block;
     text-align: center;
     padding: 30px;
-    font-size: 5vw;
+    font-size: 40px;
 }

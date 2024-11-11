@@ -1,3 +1,4 @@
+
 const title = document.getElementById("bookshelf-title")
 const bookContainer = document.getElementById("book-container")
 const addBookButton = document.getElementById("addConfirm")
@@ -96,7 +97,7 @@ function bookshelfRenderer() {
                     edit_book_div.getElementsByClassName("editConfirm")[0].addEventListener("click", async () => {
                         const dateadded = edit_book_div.classList.item(1)
 
-                        let bookList = bookshelf.books.map((book) => {
+                        let bookList = JSON.parse(localStorage.getItem("bookshelf")).books.map((book) => {
                             if (String(book.dateadded) !== String(dateadded)) {
                                 return book
                             }
@@ -135,7 +136,7 @@ function bookshelfRenderer() {
                     const toDelete = event.target.parentElement.parentElement
                     const dateadded = toDelete.id
 
-                    let bookList = bookshelf.books.filter((book) => {
+                    let bookList = JSON.parse(localStorage.getItem("bookshelf")).books.filter((book) => {
                         if (String(book.dateadded) !== String(dateadded)) {
                             return true
                         }
@@ -179,20 +180,24 @@ function bookshelfRenderer() {
     }
 
     function render() {
+        let tempBooks = searcher.search()
+        let tempLength = tempBooks.length
+
         bookContainer.innerHTML = ""
-        title.textContent = `Bookshelf: ${bookshelfLength} Books`
-        for (let i = 0; i < Math.min(20, bookshelfLength - currentPage * pageSize); i++) {
+        title.textContent = `Bookshelf: ${tempLength} Books`
+        for (let i = 0; i < Math.min(20, tempLength - currentPage * pageSize); i++) {
             let newBookIndex = i + currentPage * pageSize
-            let newBookData = books[newBookIndex]
+            let newBookData = tempBooks[newBookIndex]
             let newBook = makeBook(newBookData)
 
             bookContainer.appendChild(newBook)
         }
 
-        currentDisplay.textContent = `Current: ${currentPage + 1}/${Math.ceil(bookshelfLength / pageSize)}`
+        currentDisplay.textContent = `Current: ${currentPage + 1}/${Math.ceil(tempLength / pageSize)}`
     }
 
     async function addBook(bookInfo) {
+        books = JSON.parse(localStorage.getItem("bookshelf")).books
         bookshelfLength = books.push(bookInfo)
         bookshelf = { books: books }
         localStorage.setItem("bookshelf", JSON.stringify(bookshelf))
@@ -207,7 +212,103 @@ function bookshelfRenderer() {
     return { render, renderNext, renderPrevious, addBook }
 }
 
+// closure to manage searching
+function searchManager() {
+    function cleanResult(result) {
+        let cleaned = []
+
+        for (let i = 0; i < result.length; i++) {
+            let cleanedBook = {
+                title: result[i].title,
+                author: result[i].author,
+                published: result[i].published,
+                isbn: result[i].isbn,
+                genre: result[i].genre,
+                cover: result[i].cover,
+                summary: result[i].summary,
+                tags: result[i].tags,
+                dateadded: result[i].id
+            }
+
+            cleaned.push(cleanedBook)
+        }
+
+        return cleaned
+    }
+
+    function search() {
+        let bookSearch = JSON.parse(localStorage.getItem("bookshelf")).books
+
+        let minisearch = new MiniSearch({
+            idField: "dateadded",
+            fields: ["title", "author", "published", "genre", "summary", "tags"],
+            storeFields: ["title", "author", "published", "isbn", "genre", "cover", "summary", "tags", "dateadded"]
+        })
+        minisearch.addAll(bookSearch)
+
+        const titleSearch = document.getElementById("title").value
+        const authorSearch = document.getElementById("author").value
+        const publishedSearch = document.getElementById("published").value
+        const genreSearch = document.getElementById("genre").value
+        const summarySearch = document.getElementById("summary").value
+        const tagsSearch = document.getElementById("tags").value
+
+        // search through titles
+        if (titleSearch.length != 0) {
+            bookSearch = minisearch.search(titleSearch, { fields: ["title"], prefix: true, fuzzy: 0.2 })
+            minisearch.removeAll()
+            bookSearch = cleanResult(bookSearch)
+            minisearch.addAll(bookSearch)
+        }
+
+        // search through authors
+        if (authorSearch.length != 0) {
+            bookSearch = minisearch.search(authorSearch, { fields: ["author"], prefix: true, fuzzy: 0.2 })
+            minisearch.removeAll()
+            bookSearch = cleanResult(bookSearch)
+            minisearch.addAll(bookSearch)
+        }
+
+        // search through published
+        if (publishedSearch.length != 0) {
+            bookSearch = minisearch.search(publishedSearch, { fields: ["published"], prefix: true })
+            minisearch.removeAll()
+            bookSearch = cleanResult(bookSearch)
+            minisearch.addAll(bookSearch)
+        }
+
+        // search through genre
+        if (genreSearch.length != 0) {
+            bookSearch = minisearch.search(genreSearch, { fields: ["genre"], prefix: true })
+            minisearch.removeAll()
+            bookSearch = cleanResult(bookSearch)
+            minisearch.addAll(bookSearch)
+        }
+
+        // search through summary
+        if (summarySearch.length != 0) {
+            bookSearch = minisearch.search(summarySearch, { fields: ["summary"], prefix: true, fuzzy: 0.2 })
+            minisearch.removeAll()
+            bookSearch = cleanResult(bookSearch)
+            minisearch.addAll(bookSearch)
+        }
+
+        // search through tags
+        if (tagsSearch.length != 0) {
+            bookSearch = minisearch.search(tagsSearch, { fields: ["tags"], prefix: true, fuzzy: 0.2 })
+            minisearch.removeAll()
+            bookSearch = cleanResult(bookSearch)
+            minisearch.addAll(bookSearch)
+        }
+
+        return bookSearch
+    }
+
+    return { search }
+}
+
 let renderer = bookshelfRenderer()
+let searcher = searchManager()
 renderer.render()
 
 previousBtn.addEventListener("click", () => {
@@ -232,4 +333,19 @@ addBookButton.addEventListener("click", () => {
     }
 
     renderer.addBook(newBookInfo)
+})
+
+document.getElementById("search").addEventListener("click", () => {
+    renderer.render()
+})
+
+document.getElementById("reset").addEventListener("click", () => {
+    document.getElementById("title").value = ""
+    document.getElementById("author").value = ""
+    document.getElementById("published").value = ""
+    document.getElementById("genre").value = ""
+    document.getElementById("summary").value = ""
+    document.getElementById("tags").value = ""
+
+    renderer.render()
 })
