@@ -165,7 +165,7 @@
     flex-flow: column;
     gap: 20px;
     max-width: 380px;
-
+    border-top: white 2px dashed
 }
 
 .edit-book p {
@@ -199,6 +199,7 @@
     flex-flow: column;
     gap: 20px;
     max-width: 380px;
+    border-top: white 2px dashed
 }
 
 .bookshelf-add p {

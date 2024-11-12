@@ -9,14 +9,15 @@ const { v4: uuidv4 } = require('uuid');
 
 const router = express.Router()
 
-// remove all codes after 15 min
+// Remove all codes after 15 minutes
 setInterval(async () => {
     await db.sql`DELETE FROM signup_codes`
 }, 1000 * 60 * 15);
 
+// Rate limiter middleware
 const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000,
-    limit: 15,
+    windowMs: 1 * 60 * 1000, // 1 minute
+    limit: 15, // limit each IP to 15 requests per windowMs
     standardHeaders: true,
     legacyHeaders: false,
     message: { response: "Too many requests! Please slow down and try again in a minute." }
@@ -24,9 +25,9 @@ const limiter = rateLimit({
 
 router.use(limiter)
 
-// email verification code
+// Email verification code endpoint
 router.post("/verify", async (req, res) => {
-    // validate request body
+    // Validate request body
     if (req.body === null || req.body.email === null) {
         req.json({
             response: "Invalid request body."
@@ -36,32 +37,31 @@ router.post("/verify", async (req, res) => {
 
     const email = String(req.body.email)
 
-    // check for email validity
-    if (validator.validate(email) == false) {
+    // Check for email validity
+    if (!validator.validate(email)) {
         res.json({
             response: "Invalid Email."
         })
         return
     }
 
-    // make sure email doesn't already belong to an user
+    // Ensure email doesn't already belong to a user
     let queryResult = await db.sql`SELECT * FROM authentication WHERE email = ${email}`
-
-    if (!queryResult.length == 0) {
+    if (queryResult.length !== 0) {
         res.json({
             response: "This Email already belongs to another user."
         })
         return
     }
 
-    // send verification code
+    // Generate and send verification code
     let generatedCode = 100000 + Math.floor(Math.random() * 900000)
 
-    // save code to db
+    // Save code to database
     await db.sql`DELETE FROM signup_codes WHERE email = ${email}`
     await db.sql`INSERT INTO signup_codes VALUES (${email}, ${generatedCode})`
 
-    // send email
+    // Configure email transporter
     let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -70,6 +70,7 @@ router.post("/verify", async (req, res) => {
         }
     })
 
+    // Email options
     var mailOptions = {
         from: process.env.GMAIL_USER,
         to: email,
@@ -77,6 +78,7 @@ router.post("/verify", async (req, res) => {
         text: `A BookshelfAI email verification code has been requested for this email. If this was not you, please ignore this email. \n\nYour code is: ${generatedCode}.`
     }
 
+    // Send email
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
             console.log(error)
@@ -90,10 +92,9 @@ router.post("/verify", async (req, res) => {
     })
 })
 
-
-// account creation endpoint
+// Account creation endpoint
 router.post("/makeaccount", async (req, res) => {
-    // validate request body
+    // Validate request body
     if (req.body === null || req.body.email === null || req.body.code === null || req.body.pass === null) {
         req.json({
             response: "Invalid request body."
@@ -105,17 +106,16 @@ router.post("/makeaccount", async (req, res) => {
     const code = String(req.body.code)
     const pass = String(req.body.pass)
 
-    // check if code is valid
+    // Check if code is valid
     let queryResult = await db.sql`SELECT * FROM signup_codes WHERE email = ${email}`
-
-    if (queryResult.length == 0 || String(queryResult[0].code) !== code) {
+    if (queryResult.length === 0 || String(queryResult[0].code) !== code) {
         res.json({
             response: "Invalid code. Either you have not requested a code, you have used an email that belongs to someone else, or you have inputted the wrong code."
         })
         return
     }
 
-    // proceed with account creation
+    // Proceed with account creation
     const hashed = await bcrypt.hash(pass, 10)
     const jwtcode = uuidv4()
     await db.sql`INSERT INTO authentication VALUES (${email}, ${hashed}, ${jwtcode})`

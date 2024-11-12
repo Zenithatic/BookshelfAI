@@ -14,6 +14,50 @@ if (bookshelf === null) {
     window.location.href = "/login"
 }
 
+let renderer = bookshelfRenderer()
+let searcher = searchManager()
+renderer.render()
+
+previousBtn.addEventListener("click", () => {
+    renderer.renderPrevious()
+})
+
+nextBtn.addEventListener("click", () => {
+    renderer.renderNext()
+})
+
+addBookButton.addEventListener("click", () => {
+    let newBookInfo = {
+        "title": document.getElementById("addTitle").value,
+        "author": document.getElementById("addAuthor").value,
+        "published": document.getElementById("addPublished").value,
+        "isbn": document.getElementById("addIsbn").value,
+        "genre": document.getElementById("addGenre").value,
+        "cover": document.getElementById("addCover").value,
+        "summary": document.getElementById("addSummary").value,
+        "tags": document.getElementById("addTags").value,
+        "dateadded": String(Date.now())
+    }
+
+    renderer.addBook(newBookInfo)
+})
+
+document.getElementById("search").addEventListener("click", () => {
+    renderer.render()
+})
+
+document.getElementById("reset").addEventListener("click", () => {
+    document.getElementById("title").value = ""
+    document.getElementById("author").value = ""
+    document.getElementById("published").value = ""
+    document.getElementById("genre").value = ""
+    document.getElementById("summary").value = ""
+    document.getElementById("tags").value = ""
+
+    renderer.render()
+})
+
+
 // closure to manage bookshelf
 function bookshelfRenderer() {
     // jsonify bookshelf and initialize variables
@@ -306,46 +350,3 @@ function searchManager() {
 
     return { search }
 }
-
-let renderer = bookshelfRenderer()
-let searcher = searchManager()
-renderer.render()
-
-previousBtn.addEventListener("click", () => {
-    renderer.renderPrevious()
-})
-
-nextBtn.addEventListener("click", () => {
-    renderer.renderNext()
-})
-
-addBookButton.addEventListener("click", () => {
-    let newBookInfo = {
-        "title": document.getElementById("addTitle").value,
-        "author": document.getElementById("addAuthor").value,
-        "published": document.getElementById("addPublished").value,
-        "isbn": document.getElementById("addIsbn").value,
-        "genre": document.getElementById("addGenre").value,
-        "cover": document.getElementById("addCover").value,
-        "summary": document.getElementById("addSummary").value,
-        "tags": document.getElementById("addTags").value,
-        "dateadded": String(Date.now())
-    }
-
-    renderer.addBook(newBookInfo)
-})
-
-document.getElementById("search").addEventListener("click", () => {
-    renderer.render()
-})
-
-document.getElementById("reset").addEventListener("click", () => {
-    document.getElementById("title").value = ""
-    document.getElementById("author").value = ""
-    document.getElementById("published").value = ""
-    document.getElementById("genre").value = ""
-    document.getElementById("summary").value = ""
-    document.getElementById("tags").value = ""
-
-    renderer.render()
-})

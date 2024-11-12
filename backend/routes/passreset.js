@@ -9,14 +9,15 @@ const { v4: uuidv4 } = require("uuid")
 
 const router = express.Router()
 
-// remove all codes after 15 min
+// Remove all codes after 15 minutes
 setInterval(async () => {
     await db.sql`DELETE FROM password_change_codes`
 }, 1000 * 60 * 15);
 
+// Rate limiter to prevent abuse
 const limiter = rateLimit({
-    windowMs: 1 * 60 * 1000,
-    limit: 15,
+    windowMs: 1 * 60 * 1000, // 1 minute
+    limit: 15, // limit each IP to 15 requests per windowMs
     standardHeaders: true,
     legacyHeaders: false,
     message: { response: "Too many requests! Please slow down and try again in a minute." }
@@ -24,10 +25,11 @@ const limiter = rateLimit({
 
 router.use(limiter)
 
+// Endpoint to request a password reset code
 router.post("/getcode", async (req, res) => {
-    // validate request body
-    if (req.body === null || req.body.email === null) {
-        req.json({
+    // Validate request body
+    if (!req.body || !req.body.email) {
+        res.json({
             response: "Invalid request body."
         })
         return
@@ -35,17 +37,16 @@ router.post("/getcode", async (req, res) => {
 
     const email = String(req.body.email)
 
-    // check for email validity
-    if (validator.validate(email) == false) {
+    // Check for email validity
+    if (!validator.validate(email)) {
         res.json({
             response: "Invalid Email."
         })
         return
     }
 
-    // make sure email exists in authentication table
+    // Ensure email exists in authentication table
     let queryResult = await db.sql`SELECT * FROM authentication WHERE email = ${email}`
-
     if (queryResult.length == 0) {
         res.json({
             response: "This Email is not associated with an account."
@@ -53,14 +54,12 @@ router.post("/getcode", async (req, res) => {
         return
     }
 
-    // send verification code
+    // Generate and save verification code
     let generatedCode = 100000 + Math.floor(Math.random() * 900000)
-
-    // save code to db
     await db.sql`DELETE FROM password_change_codes WHERE email = ${email}`
     await db.sql`INSERT INTO password_change_codes VALUES (${email}, ${generatedCode})`
 
-    // send email
+    // Send email with verification code
     let transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
@@ -89,11 +88,11 @@ router.post("/getcode", async (req, res) => {
     })
 })
 
-
+// Endpoint to reset the password
 router.post("/reset", async (req, res) => {
-    // validate request body
-    if (req.body === null || req.body.email === null || req.body.code === null || req.body.pass === null) {
-        req.json({
+    // Validate request body
+    if (!req.body || !req.body.email || !req.body.code || !req.body.pass) {
+        res.json({
             response: "Invalid request body."
         })
         return
@@ -103,9 +102,8 @@ router.post("/reset", async (req, res) => {
     const code = String(req.body.code)
     const pass = String(req.body.pass)
 
-    // check if code is valid
+    // Check if code is valid
     let queryResult = await db.sql`SELECT * FROM password_change_codes WHERE email = ${email}`
-
     if (queryResult.length == 0 || String(queryResult[0].code) !== code) {
         res.json({
             response: "Invalid code. Either you have not requested a code, you have inputted the wrong email, or you have inputted the wrong code."
@@ -113,7 +111,7 @@ router.post("/reset", async (req, res) => {
         return
     }
 
-    // proceed with password update
+    // Proceed with password update
     const hashed = await bcrypt.hash(pass, 10)
     const newjwtcode = uuidv4()
     await db.sql`UPDATE authentication SET password = ${hashed}, jwtcode = ${newjwtcode} WHERE email = ${email}`

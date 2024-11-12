@@ -16,7 +16,7 @@ body {
     --main-color-transparent: rgba(75, 210, 223, 0.8);
     --dark-purple-color: rgb(0, 0, 128);
     --inknut: "Inknut Antiqua", system-ui;
-    --afacad: "Afacad Flux", system-ui
+    --afacad: "Afacad Flux", system-ui;
 }
 
 .nav-bar {
@@ -40,13 +40,13 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center
+    align-items: center;
 }
 
 .nav-icon {
     height: 5vw;
     width: 5vw;
-    transition: height 0.1s, width 0.1s
+    transition: height 0.1s, width 0.1s;
 }
 
 .nav-title,
@@ -56,11 +56,11 @@ body {
     font-size: 2.5vw;
     font-style: normal;
     color: aliceblue;
-    transition: font-size 0.1s
+    transition: font-size 0.1s;
 }
 
 .nav-title>span {
-    color: var(--dark-purple-color)
+    color: var(--dark-purple-color);
 }
 
 /* Main nav */
@@ -95,13 +95,9 @@ body {
     white-space: nowrap;
 }
 
-.nav-btn.nav-active {
-    color: var(--dark-purple-color)
-}
-
+.nav-btn.nav-active,
 .nav-btn:hover {
     color: var(--dark-purple-color);
-    transition: color 0.1s;
 }
 
 /* Login */
@@ -114,7 +110,6 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
-
 }
 
 .nav-account {
@@ -132,5 +127,4 @@ body {
 
 .nav-account:hover {
     color: rgb(174, 197, 217);
-    transition: color 0.1s
 }

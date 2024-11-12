@@ -3,26 +3,29 @@
     background-color: var(--main-color);
     padding: 50px;
     font-family: var(--afacad);
-    color: white
+    color: white;
+}
+
+.help-main h1,
+.help-main h2,
+.help-main a {
+    text-align: center;
 }
 
 .help-main h1 {
-    text-align: center;
     font-size: 80px;
 }
 
 .help-main h1 span {
-    color: var(--dark-purple-color)
+    color: var(--dark-purple-color);
 }
 
 .help-main h2 {
-    text-align: center;
     font-size: 40px;
 }
 
 .help-main a {
     display: block;
-    text-align: center;
     padding: 30px;
     font-size: 40px;
 }
