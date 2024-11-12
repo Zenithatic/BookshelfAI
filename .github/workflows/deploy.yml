@@ -10,7 +10,7 @@ on:
             - 'main'            # Ensure the workflow triggers on pull requests targeting the 'main' branch
 
 jobs: 
-    test:
+    build:
         runs-on: ubuntu-latest
 
         services:
@@ -23,12 +23,21 @@ jobs:
             - name: Checkout code
               uses: actions/checkout@v4
 
+            - name: Login to DockerHub
+              run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+
             - name: Copy environment variables from repo secrets to .env for backend
               run: | 
                 echo "DB_URL=${{ secrets.DB_URL }}" >> ./backend/.env
                 echo "GMAIL_USER=${{ secrets.GMAIL_USER }}" >> ./backend/.env
                 echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> ./backend/.env
                 echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> ./backend/.env
+            
+            - name: Build the frontend docker image
+              run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend
+            
+            - name: Build the backend docker image
+              run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest ./backend
 
             - name: Run the application for tests
               run: docker-compose up --build
@@ -44,32 +53,21 @@ jobs:
             - name: Run tests
               run: python -m "pytest" ./frontend/python/tests
 
-    build:
-        runs-on: ubuntu-latest
+            - name: Stop containers 
+              run: docker stop $(docker ps -a -q)
 
-        steps:
-            - name: Checkout code
-              uses: actions/checkout@v4
-
-            - name: Login to DockerHub
-              run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
+            - name: Remove old containers
+              run: docker rm $(docker ps -a -q)
 
             - name: Replace backend url in env.js for frontend
               run: sed -i 's#http://localhost:3000#https://bookshelfai-backend.onrender.com#g' ./frontend/js/env.js
 
-            - name: Copy environment variables from repo secrets to .env for backend
-              run: | 
-                echo "DB_URL=${{ secrets.DB_URL }}" >> ./backend/.env
-                echo "GMAIL_USER=${{ secrets.GMAIL_USER }}" >> ./backend/.env
-                echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> ./backend/.env
-                echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> ./backend/.env
-            
-            - name: Build the frontend docker image
+            - name: Rebuild the frontend docker image
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend
             
-            - name: Build the backend docker image
+            - name: Rebuild the backend docker image
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest ./backend
-            
+
             - name: Push the frontend docker image to docker hub
               run: docker push ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest 
 
@@ -81,6 +79,7 @@ jobs:
 
             - name: Send request to Render to redeploy frontend
               run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+
             
 
 
