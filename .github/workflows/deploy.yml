@@ -39,8 +39,11 @@ jobs:
             - name: Build the backend docker image
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest ./backend
 
-            - name: Run the application for tests
-              run: docker-compose up --build
+            - name: Run the frontend docker image for tests
+              run: docker run -d --name baf -p 80:80 ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest
+
+            - name: Run the backend docker image for tests
+              run: docker run -d --name bab -p 3000:3000 ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest
 
             - name: Setup python
               uses: actions/setup-python@v5
