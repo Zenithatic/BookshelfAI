@@ -25,7 +25,7 @@ def test_nav_functionality():
         passwordInput.send_keys("testpassword")
         driver.execute_async_script("document.getElementById('confirmLogin').click()")
         
-        WebDriverWait(driver, 10).until(EC.alert_is_present())
+        time.sleep(5)
         driver.switch_to.alert.accept()
 
         # test to see if jwt is stored in localstorage
@@ -33,7 +33,7 @@ def test_nav_functionality():
         test1 = driver.execute_script("return localStorage.getItem('jwt')") != None
 
         # navigate to about then bookshelf page
-        time.sleep(3)
+        time.sleep(1)
         nav_bar_main = driver.find_element(by=By.CLASS_NAME, value="nav-bar-main")
         nav_bar_main.find_elements(by=By.CLASS_NAME, value="nav-btn")[4].click()
 
