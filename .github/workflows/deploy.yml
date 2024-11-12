@@ -10,13 +10,47 @@ on:
             - 'main'            # Ensure the workflow triggers on pull requests targeting the 'main' branch
 
 jobs: 
+    test:
+        runs-on: ubuntu-latest
+
+        services:
+         selenium:
+          image: selenium/standalone-chrome
+          ports:
+            - 4444:4444
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Copy environment variables from repo secrets to .env for backend
+              run: | 
+                echo "DB_URL=${{ secrets.DB_URL }}" >> ./backend/.env
+                echo "GMAIL_USER=${{ secrets.GMAIL_USER }}" >> ./backend/.env
+                echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> ./backend/.env
+                echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> ./backend/.env
+
+            - name: Run the application for tests
+              run: docker-compose up --build
+
+            - name: Setup python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: '3.12'
+            
+            - name: Install dependencies
+              run: pip install pytest selenium
+            
+            - name: Run tests
+              run: python -m "pytest" ./frontend/python/tests
+
     build:
         runs-on: ubuntu-latest
 
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-            
+
             - name: Login to DockerHub
               run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
@@ -35,24 +69,7 @@ jobs:
             
             - name: Build the backend docker image
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest ./backend
-
-            - name: Run the frontend docker image for tests
-              run: docker run -d --name baf -p 80:80 ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest
-
-            - name: Run the backend docker image for tests
-              run: docker run -d --name bab -p 3000:3000 ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest
-
-            - name: Setup python
-              uses: actions/setup-python@v5
-              with:
-                  python-version: '3.12'
             
-            - name: Install dependencies
-              run: pip install pytest selenium
-            
-            - name: Run tests
-              run: python -m "pytest" ./frontend/python/tests
-
             - name: Push the frontend docker image to docker hub
               run: docker push ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest 
 

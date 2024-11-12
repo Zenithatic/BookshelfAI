@@ -11,6 +11,7 @@ def init_driver():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-gpu")
     options.add_argument("--incognito") 
+    options.add_argument("--disable-popup-blocking")
     options.set_capability("goog:loggingPrefs", {"browser": "ALL"})
 
     driver = webdriver.Chrome(
