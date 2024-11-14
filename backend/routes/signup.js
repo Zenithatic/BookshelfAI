@@ -119,7 +119,19 @@ router.post("/makeaccount", async (req, res) => {
     const hashed = await bcrypt.hash(pass, 10)
     const jwtcode = uuidv4()
     await db.sql`INSERT INTO authentication VALUES (${email}, ${hashed}, ${jwtcode})`
-    await db.sql`INSERT INTO user_bookshelves VALUES (${email}, '{ "books": [] }')`
+    await db.sql`INSERT INTO user_bookshelves VALUES (${email}, '{
+        "books": [{
+            "title": "Sample Book",
+            "author": "John Smith",
+            "published": "2024",
+            "isbn": "1234567890",
+            "genre": "romance, horror",
+            "cover": "https://th.bing.com/th/id/OIP.4XB8NF1awQyApnQDDmBmQwHaEo?rs=1&pid=ImgDetMain",
+            "summary": "Welcome to BookshelfAI! This is a sample book that you can edit to get started with our platform. Feel free to delete this book and add your own!",
+            "tags": "tag1 tag2",
+            "dateadded": "1"    
+        }]
+    }')`
     await db.sql`DELETE FROM signup_codes WHERE email = ${email}`
 
     res.json({

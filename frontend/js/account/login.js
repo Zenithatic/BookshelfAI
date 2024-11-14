@@ -1,22 +1,27 @@
+// Get references to DOM elements
 const emailInput = document.getElementById("email")
 const passwordInput = document.getElementById("password")
 const loginButton = document.getElementById("confirmLogin")
 const forgotPassword = document.getElementById("forgotPassword")
 
+// Event listener for "Forgot Password" link
 forgotPassword.addEventListener("click", () => {
     window.location.href = "/resetpassword"
 })
 
+// Event listener for login button
 loginButton.addEventListener("click", async () => {
+    // Get trimmed input values
     let givenEmail = emailInput.value.trim()
     let givenPass = passwordInput.value.trim()
 
-    // check for valid input
+    // Check for valid input
     if (givenEmail.length == 0 || givenPass.length == 0) {
         window.alert("Some fields are empty. Please fill them in.")
+        return
     }
 
-    // request login
+    // Request login
     const response = await fetch(`${window.env.BACKEND_URL}/login/authenticate`, {
         method: "POST",
         headers: {
@@ -25,11 +30,13 @@ loginButton.addEventListener("click", async () => {
         body: JSON.stringify({ email: givenEmail, pass: givenPass })
     })
 
+    // Parse response data
     let data = await response.json()
 
+    // Alert user with response message
     window.alert(data.response)
 
-    // store new jwt in localStorage, clear old bookshelf
+    // Store new JWT in localStorage and clear old bookshelf if login is successful
     if (data.response.startsWith("Success")) {
         localStorage.setItem("jwt", data.jwt)
         localStorage.removeItem("bookshelf")

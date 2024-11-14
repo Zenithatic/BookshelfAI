@@ -82,8 +82,3 @@ jobs:
 
             - name: Send request to Render to redeploy frontend
               run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
-
-            
-
-
-              

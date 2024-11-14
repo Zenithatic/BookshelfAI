@@ -69,6 +69,12 @@
     cursor: pointer;
 }
 
+select#sort-options {
+    font-family: var(--afacad);
+    font-size: 20px;
+    width: 200px;
+}
+
 .book-container {
     font-family: var(--afacad);
     border-color: var(--main-color);
