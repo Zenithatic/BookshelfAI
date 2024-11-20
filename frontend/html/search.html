@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="/styles/main/navbar.css">
     <!-- footer stylesheet -->
     <link rel="stylesheet" href="/styles/main/footer.css">
+    <!-- search stylesheet -->
+    <link rel="stylesheet" href="/styles/search/search.css">
 
     <!-- environment variable script -->
     <script src="/js/env.js"></script>
@@ -44,7 +46,67 @@
     </header>
 
     <main>
-        <div style="display: inline-block; background-color: red; height: 1000px"></div>
+        <div class="background">
+            <div class="container">
+                <h1 id="search-title">AI-Assisted Search</h1>
+                <p id="search-info">
+                    Welcome to the search page! You may search for books all over the internet by prompting the AI
+                    assistant below. The AI will search for books based on the information you provide. For more
+                    accurate results, please provide as much information as possible, in a natural language format.
+                    You may also use the image book recognition feature to search for books by either uploading an
+                    image or taking a picture. Disclaimer: the AI is not fully accurate. Please double-check the
+                    information provided by the AI. ISBN numbers are especially inaccurate, so they have been
+                    removed from the search results. Additional note: sometimes the AI may be slow. You will be alerted
+                    when your prompt has finished processing. If you see that no books appear on the page, that means
+                    no books were found that match your prompt. <br><br>Examples of prompts: "Search for books by
+                    Stephen King", "Give me recommendations based on the romance books in my bookshelf", "Find books
+                    similar to ...", "Search for a book titled ..."
+                </p>
+
+                <div class="prompt-container">
+                    <textarea id="prompt" name="prompt" rows="10" cols="43" wrap="soft"
+                        placeholder="Prompt..."></textarea>
+                    <button id="prompt-button">Search</button>
+                </div>
+
+                <div class="image-search-container">
+                    <label for="photo-file">Take a photo:</label>
+                    <input type="file" id="photo-file" capture="user" accept="image/*" />
+
+                    <label for="upload-file">Upload a photo:</label>
+                    <input type="file" id="upload-file" accept="image/*" />
+
+                    <img id="preview" src="https://www.freeiconspng.com/thumbs/no-image-icon/no-image-icon-6.png"
+                        height="300">
+
+                    <button id="send-image-button">Analyze Image</button>
+                </div>
+
+                <div class="book-container" id="book-container">
+                    <!-- 
+                        <div class="book">
+                            <div class="upper">
+                                <img width="100px"
+                                    src="https://blog.udemy.com/wp-content/uploads/2014/05/bigstock-test-icon-63758263.jpg">
+                                <h2 class="title">Title: Blah</h2>
+                            </div>
+                            <div class="lower">
+                                <p class="author">Author: Joe</p>
+                                <p class="published">Published: 2024</p>
+                                <p class="isbn">ISBN: 123</p>
+                                <p class="genre">Genre: Horror</p>
+                                <p class="summary">Summary: ...</p>
+                                <p class="tags">Tags: tag1 tag2</p>
+                            </div>
+                            <div class="options">
+                                <button class="modify edit">Edit</button>
+                                <button class="modify delete">Delete</button>
+                            </div>
+                        </div>
+                        -->
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -58,6 +120,9 @@
 
     <!-- navbar behaviour script -->
     <script src="/js/main/nav.js"></script>
+
+    <!-- search script -->
+    <script src="/js/search/search.js"></script>
 </body>
 
 </html>

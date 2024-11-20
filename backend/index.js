@@ -15,6 +15,8 @@ app.use(helmet())
 // Parse incoming JSON requests
 app.use(express.json())
 
+// Maximum 
+
 // Allow certain origins for CORS
 app.use((req, res, next) => {
     const allowedOrigins = ["http://localhost", "https://bookshelfai.onrender.com"]
@@ -48,6 +50,9 @@ app.use("/login", login)
 
 const bookshelf = require("./routes/bookshelf.js")
 app.use("/bookshelf", bookshelf)
+
+const search = require("./routes/search.js")
+app.use("/search", search)
 
 // Start the server
 app.listen(port, () => {

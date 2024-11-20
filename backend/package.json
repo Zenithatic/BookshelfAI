@@ -10,6 +10,7 @@
   "author": "zenithatic",
   "license": "ISC",
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
     "@neondatabase/serverless": "^0.10.1",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
@@ -19,6 +20,7 @@
     "express-rate-limit": "^7.4.1",
     "helmet": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.16",
     "uuid": "^11.0.2"
   },

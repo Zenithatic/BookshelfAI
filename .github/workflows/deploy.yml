@@ -32,6 +32,10 @@ jobs:
                 echo "GMAIL_USER=${{ secrets.GMAIL_USER }}" >> ./backend/.env
                 echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> ./backend/.env
                 echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> ./backend/.env
+                echo "GEMINI_API_KEY1=${{ secrets.GEMINI_API_KEY1 }}" >> ./backend/.env
+                echo "GEMINI_API_KEY2=${{ secrets.GEMINI_API_KEY2 }}" >> ./backend/.env
+                echo "GEMINI_API_KEY3=${{ secrets.GEMINI_API_KEY3 }}" >> ./backend/.env
+                echo "GEMINI_API_KEY4=${{ secrets.GEMINI_API_KEY4 }}" >> ./backend/.env
             
             - name: Build the frontend docker image
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend

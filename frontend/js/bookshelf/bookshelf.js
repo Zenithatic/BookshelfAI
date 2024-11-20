@@ -189,14 +189,14 @@ function bookshelfRenderer() {
         edit_book_div.classList.add(newBookData.dateadded)
         edit_book_div.innerHTML = `
             <p>Editing: ${newBookData.title}</p>
-            <input type="text" name="title" id="newTitle" placeholder="New Title" value=${newBookData.title}>
-            <input type="text" name="author" id="newAuthor" placeholder="New Author" value=${newBookData.author}>
-            <input type="text" name="published" id="newPublished" placeholder="New Published" value=${newBookData.published}>
-            <input type="text" name="isbn" id="newIsbn" placeholder="New ISBN" value=${newBookData.isbn}>
-            <input type="text" name="genre" id="newGenre" placeholder="New Genre" value=${newBookData.genre}>
-            <input type="text" name="cover" id="newCover" placeholder="New Cover" value=${newBookData.cover}>
-            <input type="text" name="summary" id="newSummary" placeholder="New Summary" value=${newBookData.summary}>
-            <input type="text" name="tags" id="newTags" placeholder="New Tags" value=${newBookData.tags}>
+            <input type="text" name="title" id="newTitle" placeholder="New Title" value="${newBookData.title}">
+            <input type="text" name="author" id="newAuthor" placeholder="New Author" value="${newBookData.author}">
+            <input type="text" name="published" id="newPublished" placeholder="New Published" value="${newBookData.published}">
+            <input type="text" name="isbn" id="newIsbn" placeholder="New ISBN" value="${newBookData.isbn}">
+            <input type="text" name="genre" id="newGenre" placeholder="New Genre" value="${newBookData.genre}">
+            <input type="text" name="cover" id="newCover" placeholder="New Cover" value="${newBookData.cover}">
+            <input type="text" name="summary" id="newSummary" placeholder="New Summary" value="${newBookData.summary}">
+            <input type="text" name="tags" id="newTags" placeholder="New Tags" value="${newBookData.tags}">
             <button class="editConfirm">Confirm Edit</button>
         `
         document.getElementsByClassName("container")[0].appendChild(edit_book_div)

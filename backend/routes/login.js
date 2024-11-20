@@ -76,6 +76,14 @@ router.post("/verifyjwt", validateJWT, async (req, res) => {
 
 // Route to sign out user
 router.post("/signout", validateJWT, async (req, res) => {
+    // Validate request body
+    if (req.body === null || req.email === null) {
+        req.json({
+            response: "Invalid request body."
+        })
+        return
+    }
+
     const newJwtCode = uuidv4()
     await db.sql`UPDATE authentication SET jwtcode = ${newJwtCode} WHERE email = ${String(req.email)}`
 

@@ -22,10 +22,22 @@ router.use(limiter)
 router.get("/getbookshelf", validateJWT, async (req, res) => {
     try {
         const queryResult = await db.sql`SELECT * FROM user_bookshelves WHERE email = ${req.email}`
+        let bookshelf = queryResult[0].bookshelf
+
+        // clean up escape sequences
+        while (true) {
+            try {
+                bookshelf = JSON.parse(bookshelf)
+            }
+            catch {
+                bookshelf = JSON.stringify(bookshelf)
+                break
+            }
+        }
 
         res.json({
             response: "Successful retrieval.",
-            bookshelf: JSON.stringify(queryResult[0].bookshelf)
+            bookshelf: bookshelf
         })
     } catch (error) {
         console.error(error)
