@@ -72,9 +72,20 @@ jobs:
                 heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
                 heroku_app_name: "bookshelfai-frontend"
                 heroku_email: ${{ secrets.HEROKU_EMAIL }}
-                appdir: "frontend"
-                usedocker: true
-                stack: "container"
+                justlogin: true
+            
+            - name: Login to Heroku registry
+              run: heroku container:login
+            
+            - name: Build docker image
+              run: docker build -t registry.heroku.com/bookshelfai-frontend/web ./frontend
+            
+            - name: Push docker image
+              run: docker push registry.heroku.com/bookshelfai-frontend/web
+
+            - name: Release the image
+              run: heroku container:release web --app bookshelfai-frontend
+            
 
     deploy-backend:
         needs: test
@@ -93,15 +104,27 @@ jobs:
                 echo "GEMINI_API_KEY3=${{ secrets.GEMINI_API_KEY3 }}" >> ./backend/.env
                 echo "GEMINI_API_KEY4=${{ secrets.GEMINI_API_KEY4 }}" >> ./backend/.env
             
-            - name: Deploy to Heroku
+            - name: Login to Heroku
               uses: akhileshns/heroku-deploy@v3.13.15
               with: 
                 heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
                 heroku_app_name: "bookshelfai-backend"
                 heroku_email: ${{ secrets.HEROKU_EMAIL }}
-                appdir: "backend"
-                usedocker: true
-                stack: "container"
+                justlogin: true
+            
+            - name: Login to Heroku registry
+              run: heroku container:login
+            
+            - name: Build docker image
+              run: docker build -t registry.heroku.com/bookshelfai-backend/web ./backend
+            
+            - name: Push docker image
+              run: docker push registry.heroku.com/bookshelfai-backend/web
+
+            - name: Release the image
+              run: heroku container:release web --app bookshelfai-backend
+
+            
 
 
 
