@@ -28,7 +28,7 @@ Disclaimer: this app does not provide any actual book content itself, it only ac
 
 **Frontend:** Vanilla HTML/CSS/JavaScript
 
-**Backend:** Node, Express, PostgreSQL
+**Backend:** Node.js, Express.js, PostgreSQL
 
 ## Authors
 
