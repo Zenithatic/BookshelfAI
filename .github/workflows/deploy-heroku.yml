@@ -66,6 +66,9 @@ jobs:
             - name: Replace backend url in env.js for frontend
               run: sed -i 's#http://localhost:3000#https://bookshelfai-backend-854a90edf2ca.herokuapp.com/#g' ./frontend/js/env.js
             
+            - name: Replace port in nginx to heroku port
+              run: sed -i 's#80#${PORT}#g' ./frontend/nginx.conf
+            
             - name: Deploy to Heroku
               uses: akhileshns/heroku-deploy@v3.13.15
               with: 
