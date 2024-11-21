@@ -41,7 +41,7 @@ jobs:
               run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest ./backend
 
             - name: Run the frontend docker image for tests
-              run: docker run -d --name baf ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest
+              run: docker run -d --name baf -p 80:80 ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest
 
             - name: Run the backend docker image for tests
               run: docker run -d --name bab -p 3000:3000 ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest

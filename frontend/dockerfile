@@ -1,6 +1,6 @@
 FROM nginx
 
-ENV PORT=80
+EXPOSE 80
 
 # Set user to root
 USER root
@@ -10,7 +10,3 @@ COPY "./" /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf
 RUN chmod -R 755 /usr/share/nginx/html
 
-# Replace the port in the nginx config file
-
-# Run Nginx in the foreground
-CMD sed -i "s/port/$PORT/g" /etc/nginx/nginx.conf && nginx -g 'daemon off;'
