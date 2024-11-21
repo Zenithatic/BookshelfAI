@@ -1,5 +1,8 @@
 FROM nginx
 
+# set user to root
+USER root
+
 # copy files
 COPY "./" /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf 

@@ -55,6 +55,6 @@ const search = require("./routes/search.js")
 app.use("/search", search)
 
 // Start the server
-app.listen(port, () => {
+app.listen(process.env.PORT || port, '0.0.0.0', () => {
     console.log("BookshelfAI Backend is listening on port 3000.")
 })
