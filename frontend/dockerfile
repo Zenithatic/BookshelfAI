@@ -5,11 +5,8 @@ USER root
 
 # copy files
 COPY "./" /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/nginx.conf 
+COPY default.conf.template /etc/nginx/conf.d/default.conf.template
 RUN chmod -R 755 /usr/share/nginx/html
 
 # update port
-RUN apt-get update && apt-get install -y gettext-base && \
-    envsubst '$PORT' < /etc/nginx/nginx.conf > /etc/nginx/nginx.conf.tmp && \
-    mv /etc/nginx/nginx.conf.tmp /etc/nginx/nginx.conf && \
-    chmod -R 755 /usr/share/nginx/html
+CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
