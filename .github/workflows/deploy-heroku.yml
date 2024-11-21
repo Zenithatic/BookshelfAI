@@ -10,7 +10,7 @@ on:
             - 'main'            # Ensure the workflow triggers on pull requests targeting the 'main' branch
 
 jobs: 
-    build:
+    test:
         runs-on: ubuntu-latest
 
         services:
@@ -22,9 +22,6 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v4
-
-            - name: Login to DockerHub
-              run: echo "${{ secrets.DOCKER_PASS }}" | docker login -u "${{ secrets.DOCKER_USER }}" --password-stdin
 
             - name: Copy environment variables from repo secrets to .env for backend
               run: | 
@@ -60,29 +57,53 @@ jobs:
             - name: Run tests
               run: python -m "pytest" ./frontend/python/tests
 
-            - name: Stop containers 
-              run: docker stop $(docker ps -a -q)
-
-            - name: Remove old containers
-              run: docker rm $(docker ps -a -q)
+    deploy-frontend:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
 
             - name: Replace backend url in env.js for frontend
               run: sed -i 's#http://localhost:3000#https://bookshelfai-backend.onrender.com#g' ./frontend/js/env.js
-
-            - name: Rebuild the frontend docker image
-              run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest ./frontend
             
-            - name: Rebuild the backend docker image
-              run: docker build -t ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest ./backend
+            - name: Deploy to Heroku
+              uses: akhileshns/heroku-deploy@v3.13.15
+              with: 
+                heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+                heroku_app_name: "bookshelfai-frontend"
+                heroku_email: ${{ secrets.HEROKU_EMAIL }}
+                appdir: "frontend"
+                usedocker: true
+                stack: "container"
 
-            - name: Push the frontend docker image to docker hub
-              run: docker push ${{ secrets.DOCKER_USER }}/bookshelfai-frontend:latest 
+    deploy-backend:
+        needs: test
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
 
-            - name: Push the backend docker image to docker hub
-              run: docker push ${{ secrets.DOCKER_USER }}/bookshelfai-backend:latest 
+            - name: Copy environment variables from repo secrets to .env for backend
+              run: | 
+                echo "DB_URL=${{ secrets.DB_URL }}" >> ./backend/.env
+                echo "GMAIL_USER=${{ secrets.GMAIL_USER }}" >> ./backend/.env
+                echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> ./backend/.env
+                echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> ./backend/.env
+                echo "GEMINI_API_KEY1=${{ secrets.GEMINI_API_KEY1 }}" >> ./backend/.env
+                echo "GEMINI_API_KEY2=${{ secrets.GEMINI_API_KEY2 }}" >> ./backend/.env
+                echo "GEMINI_API_KEY3=${{ secrets.GEMINI_API_KEY3 }}" >> ./backend/.env
+                echo "GEMINI_API_KEY4=${{ secrets.GEMINI_API_KEY4 }}" >> ./backend/.env
+            
+            - name: Deploy to Heroku
+              uses: akhileshns/heroku-deploy@v3.13.15
+              with: 
+                heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+                heroku_app_name: "bookshelfai-backend"
+                heroku_email: ${{ secrets.HEROKU_EMAIL }}
+                appdir: "backend"
+                usedocker: true
+                stack: "container"
 
-            - name: Send request to Render to redeploy backend
-              run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL_BACKEND }}
 
-            - name: Send request to Render to redeploy frontend
-              run: curl ${{ secrets.RENDER_DEPLOY_HOOK_URL }}
+
+
+
