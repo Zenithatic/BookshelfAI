@@ -10,7 +10,14 @@ forgotPassword.addEventListener("click", () => {
 })
 
 // Event listener for login button
+let loggingIn = false
 loginButton.addEventListener("click", async () => {
+    if (loggingIn == true) {
+        window.alert("Please wait for the current login request to finish.")
+        return
+    }
+
+    loggingIn = true
     // Get trimmed input values
     let givenEmail = emailInput.value.trim()
     let givenPass = passwordInput.value.trim()
@@ -35,6 +42,8 @@ loginButton.addEventListener("click", async () => {
 
     // Alert user with response message
     window.alert(data.response)
+
+    loggingIn = false
 
     // Store new JWT in localStorage and clear old bookshelf if login is successful
     if (data.response.startsWith("Success")) {
