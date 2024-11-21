@@ -13,4 +13,4 @@ RUN chmod -R 755 /usr/share/nginx/html
 # Replace the port in the nginx config file
 
 # Run Nginx in the foreground
-CMD sed -i "s/port/$PORT/g" /etc/nginx/nginx.conf && nginx -g 'daemon on;'
+CMD sed -i "s/port/$PORT/g" /etc/nginx/nginx.conf && nginx -g 'daemon off;'
