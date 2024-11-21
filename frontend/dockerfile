@@ -1,12 +1,18 @@
 FROM nginx
 
-# set user to root
+ENV PORT=80
+
+# Set user to root
 USER root
 
-# copy files
+RUN echo "hello world" | sed -e "s/hello/$PORT/"
+# Copy files
 COPY "./" /usr/share/nginx/html
-COPY default.conf.template /etc/nginx/conf.d/default.conf.template
+COPY nginx.conf /etc/nginx/nginx.conf
 RUN chmod -R 755 /usr/share/nginx/html
 
-# update port
-CMD /bin/sh -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
+# Replace the port in the nginx config file
+RUN sed -i "s/port/$PORT/g" /etc/nginx/nginx.conf
+
+# Run Nginx in the foreground
+CMD nginx -g 'daemon off;'
