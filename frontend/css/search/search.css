@@ -86,7 +86,7 @@
     border-radius: 10px;
     border-width: 2px;
     border-style: solid;
-    min-width: 380px;
+    min-width: 350px;
     background-color: var(--main-color);
     overflow: scroll;
     height: 800px;

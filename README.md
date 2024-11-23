@@ -5,7 +5,7 @@ BookshelfAI is an app for anyone, really, but is specifically tailored to book l
 
 Some examples of features include: adding/editing/deleting books from your bookshelf, AI book image recognition, and AI book recommendation.
                     
-Disclaimer: this app does not provide any actual book content itself, it only acts as a book manager, not a library.
+Disclaimer: this app does not provide any actual book content itself, it only acts as a book manager, not a library. Also, the AI may be inaccurate, especially if your prompts/images are unclear/blurry. 
 
 
 ## Features

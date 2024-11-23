@@ -144,7 +144,7 @@ select#sort-options {
     flex-flow: row;
     align-items: center;
     justify-content: center;
-    min-width: 380px;
+    min-width: 350px;
     font-size: 20px;
     padding: 10px;
     gap: 20px;
