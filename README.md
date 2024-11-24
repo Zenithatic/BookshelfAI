@@ -19,6 +19,12 @@ Disclaimer: this app does not provide any actual book content itself, it only ac
 - AI book recommendation based on items in your bookshelf
 
 
+## Sample Text Prompts
+- "Find some books by J.K. Rowling and tag them all with 'wishlist'"
+- Give me some book recommendations based on the romance books in my bookshelf
+- Search for a book titled 'The Queen of Hearts' by Kimmery Martin"
+
+
 ## Screenshots
 
 ![App Screenshot](https://i.imgur.com/zx9umvx.png)
