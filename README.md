@@ -1,5 +1,5 @@
 
-# BookshelfAI
+# <img width="35px" src="https://github.com/Zenithatic/BookshelfAI/blob/main/frontend/res/favicon.png?raw=true" alt="Javascript Icon" /> BookshelfAI 
 
 BookshelfAI is an app for anyone, really, but is specifically tailored to book lovers who want an easy way to manage their own list of books. 
 
