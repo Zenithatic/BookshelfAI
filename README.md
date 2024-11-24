@@ -14,7 +14,7 @@ Disclaimer: this app does not provide any actual book content itself, it only ac
 - Adding, removing, editing, and viewing your bookshelf
 - Adding tags to your books for organization
 - Searching for books within your bookshelf
-- Searching for books in the ISBN database
+- AI book searching and tagging with prompts
 - AI book recognition just by taking or uploading a photo
 - AI book recommendation based on items in your bookshelf
 

@@ -194,7 +194,7 @@ function bookshelfRenderer() {
                 <p class="isbn"><b>ISBN:</b> N/A</p>
                 <p class="genre"><b>Genre:</b> ${newBookData.genre}</p>
                 <p class="summary"><b>Summary:</b> ${newBookData.summary}</p>
-                <p class="tags"><b>Tags:</b> N/A</p>
+                <p class="tags"><b>Tags:</b> ${newBookData.tags}</p>
             </div>
             <div class="options">
                 <button class="modify add">Add To Bookshelf</button>
