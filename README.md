@@ -1,5 +1,5 @@
 
-# BookshelfAI
+# <img width="35px" src="https://github.com/Zenithatic/BookshelfAI/blob/main/frontend/res/favicon.png?raw=true" alt="Javascript Icon" /> BookshelfAI 
 
 BookshelfAI is an app for anyone, really, but is specifically tailored to book lovers who want an easy way to manage their own list of books. 
 
@@ -17,6 +17,12 @@ Disclaimer: this app does not provide any actual book content itself, it only ac
 - AI book searching and tagging with prompts
 - AI book recognition just by taking or uploading a photo
 - AI book recommendation based on items in your bookshelf
+
+
+## Sample Text Prompts
+- "Find some books by J.K. Rowling and tag them all with 'wishlist'"
+- Give me some book recommendations based on the romance books in my bookshelf
+- Search for a book titled 'The Queen of Hearts' by Kimmery Martin"
 
 
 ## Screenshots
