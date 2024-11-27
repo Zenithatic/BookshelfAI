@@ -106,7 +106,7 @@ async function promptText(userPrompt) {
         window.alert("Scan successful.")
     }
     catch (error) {
-        window.alert(error)
+        window.alert("An error has occured while generating results. This means that the AI model is down, or your input is invalid.")
     }
 
     canPrompt = true
