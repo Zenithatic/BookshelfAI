@@ -236,7 +236,7 @@ function bookshelfRenderer() {
 
             // Re-render books
             localStorage.setItem("bookshelf", JSON.stringify(bookshelf))
-            render()
+            renderer.render()
         })
     }
 
@@ -253,6 +253,12 @@ function bookshelfRenderer() {
         bookshelfLength = books.length
 
         updateBackend()
+
+        // check if bookshelf is empty
+        if (bookshelfLength == 0) {
+            bookContainer.innerHTML = ""
+            return
+        }
 
         // Re-render books
         localStorage.setItem("bookshelf", JSON.stringify(bookshelf))
@@ -281,6 +287,7 @@ function bookshelfRenderer() {
 
     // Render books
     function render() {
+
         let tempBooks = searcher.search()
 
         const sortType = document.getElementById("sort-options").value
@@ -327,7 +334,7 @@ function bookshelfRenderer() {
             bookContainer.appendChild(newBook)
         }
 
-        currentDisplay.textContent = `Current: ${currentPage + 1}/${Math.ceil(tempLength / pageSize)}`
+        currentDisplay.textContent = `Current: ${currentPage + 1}/${Math.max(0, Math.ceil(tempLength / pageSize))}`
     }
 
     // Add a new book to the bookshelf
