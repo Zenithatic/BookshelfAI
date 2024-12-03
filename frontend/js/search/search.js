@@ -105,8 +105,9 @@ async function promptText(userPrompt) {
         renderer.render(foundBooks)
         window.alert("Scan successful.")
     }
-    catch (error) { }
-    window.alert("An error has occured while generating results. This means that the AI model is down, or your input is invalid.")
+    catch (error) {
+        window.alert("An error has occured while generating results. This means that the AI model is down, or your input is invalid.")
+    }
 }
 
 canPrompt = true
