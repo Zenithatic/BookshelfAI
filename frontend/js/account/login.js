@@ -38,7 +38,7 @@ loginButton.addEventListener("click", async () => {
     })
 
     // Parse response data
-    let data = await response.json()
+    const data = await response.json()
 
     // Alert user with response message
     window.alert(data.response)
@@ -48,7 +48,7 @@ loginButton.addEventListener("click", async () => {
     // Store new JWT in localStorage and clear old bookshelf if login is successful
     if (data.response.startsWith("Success")) {
         localStorage.setItem("jwt", data.jwt)
-        localStorage.removeItem("bookshelf")
+        await loadBookshelf()
 
         // check if user is a test user
         if (localStorage.getItem("user") === "test") {
@@ -82,20 +82,47 @@ loginButton.addEventListener("click", async () => {
             )
         }
 
-        // update bookshelf in backend
-        const response = await fetch(`${window.env.BACKEND_URL}/bookshelf/updatebookshelf`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
-            },
-            body: JSON.stringify({ bookshelf: localStorage.getItem("bookshelf") })
-        })
-        const data = await response.json()
-        if (!data.response.startsWith("Successful")) {
-            window.alert("An error has occurred, your bookshelf has not been updated in the server")
-        }
+        await updateBackend()
 
         window.location.href = "/"
     }
 })
+
+async function updateBackend() {
+    // update bookshelf in backend
+    const response = await fetch(`${window.env.BACKEND_URL}/bookshelf/updatebookshelf`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("jwt")
+        },
+        body: JSON.stringify({ bookshelf: localStorage.getItem("bookshelf") })
+    })
+    const data = await response.json()
+    if (!data.response.startsWith("Successful")) {
+        window.alert("An error has occurred, your bookshelf has not been updated in the server")
+    }
+}
+
+async function loadBookshelf() {
+    // load bookshelf
+    if (localStorage.getItem("jwt") !== null) {
+        const response = await fetch(`${window.env.BACKEND_URL}/bookshelf/getbookshelf`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        })
+
+        const data = await response.json()
+
+        if (data.response.startsWith("Successful")) {
+            localStorage.setItem("bookshelf", data.bookshelf)
+        }
+        else {
+            window.alert("Invalid credentials. Please try re-logging in.")
+            window.location.href = "/signout"
+        }
+    }
+}
