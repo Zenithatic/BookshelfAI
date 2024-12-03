@@ -12,6 +12,7 @@ def test_bookshelf_functionality():
 
     try:
         driver.get("http://localhost/")
+        driver.execute_script("localStorage.setItem('user', 'test')")
         driver.implicitly_wait(3)
 
         # navigate to login page
@@ -126,6 +127,7 @@ def test_sort_functionality():
 
     try:
         driver.get("http://localhost/")
+        driver.execute_script("localStorage.setItem('user', 'test')")
         driver.implicitly_wait(3)
 
         # navigate to login page
@@ -140,6 +142,7 @@ def test_sort_functionality():
         passwordInput.send_keys("testpassword")
         driver.execute_async_script("document.getElementById('confirmLogin').click()")
         
+        time.sleep(1)
         WebDriverWait(driver, 10).until(EC.alert_is_present())
         time.sleep(2)
         driver.switch_to.alert.accept()

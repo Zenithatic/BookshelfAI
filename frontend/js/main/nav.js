@@ -51,8 +51,8 @@ async function checkLogin() {
 }
 
 async function loadBookshelf() {
-    // check if bookshelf is not cached
-    if (localStorage.getItem("bookshelf") === null && localStorage.getItem("jwt") !== null) {
+    // load bookshelf
+    if (localStorage.getItem("jwt") !== null) {
         const response = await fetch(`${window.env.BACKEND_URL}/bookshelf/getbookshelf`, {
             method: "GET",
             headers: {

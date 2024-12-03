@@ -3,3 +3,4 @@
 **/.env
 **/.pytest_cache
 **/old-deploy.yml
+**/info.py

@@ -127,7 +127,7 @@ function bookshelfRenderer() {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
-            body: JSON.stringify({ bookshelf: JSON.stringify(bookshelf) })
+            body: JSON.stringify({ bookshelf: localStorage.getItem("bookshelf") })
         })
         const data = await response.json()
         if (!data.response.startsWith("Successful")) {
@@ -287,7 +287,7 @@ function bookshelfRenderer() {
 
     // Render books
     function render() {
-
+        bookshelf = JSON.parse(localStorage.getItem("bookshelf"))
         let tempBooks = searcher.search()
 
         const sortType = document.getElementById("sort-options").value

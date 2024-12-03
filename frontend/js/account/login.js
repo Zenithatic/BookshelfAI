@@ -49,6 +49,53 @@ loginButton.addEventListener("click", async () => {
     if (data.response.startsWith("Success")) {
         localStorage.setItem("jwt", data.jwt)
         localStorage.removeItem("bookshelf")
+
+        // check if user is a test user
+        if (localStorage.getItem("user") === "test") {
+            localStorage.setItem("bookshelf",
+                `{
+                    "books": [
+                        {
+                            "title": "randombook",
+                            "author": "author2",
+                            "published": "2023",
+                            "isbn": "123456790",
+                            "genre": "comedy",
+                            "cover": "https://th.bing.com/th/id/OIP.4XB8NF1awQyApnQDDmBmQwHaEo?rs=1&pid=ImgDetMain",
+                            "summary": "a",
+                            "tags": "tag1",
+                            "dateadded": "6"
+                        },
+                        {
+                            "title": "book1",
+                            "author": "author1",
+                            "published": "2024",
+                            "isbn": "123456789",
+                            "genre": "romance, horror",
+                            "cover": "https://th.bing.com/th/id/OIP.4XB8NF1awQyApnQDDmBmQwHaEo?rs=1&pid=ImgDetMain",
+                            "summary": "a book about blah blah blah",
+                            "tags": "tag1 tag2",
+                            "dateadded": "7"
+                        }
+                    ]
+                }`
+            )
+        }
+
+        // update bookshelf in backend
+        const response = await fetch(`${window.env.BACKEND_URL}/bookshelf/updatebookshelf`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({ bookshelf: localStorage.getItem("bookshelf") })
+        })
+        const data = await response.json()
+        if (!data.response.startsWith("Successful")) {
+            window.alert("An error has occurred, your bookshelf has not been updated in the server")
+        }
+
         window.location.href = "/"
     }
 })
