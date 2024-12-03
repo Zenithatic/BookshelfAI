@@ -62,10 +62,11 @@ def test_prompt_functionality():
 
         # add the first one
         bookId = driver.find_elements(by=By.CLASS_NAME, value="book")[0].get_attribute("id")
-        driver.execute_async_script(f"document.getElementById('{bookId}').getElementsByClassName('add')[0].click()")
+        driver.execute_script(f"document.getElementById({bookId}).getElementsByClassName('add')[0].click()")
 
         # navigate to bookshelf page
         time.sleep(1)
+        nav_bar_main = driver.find_element(by=By.CLASS_NAME, value="nav-bar-main")
         nav_bar_main.find_elements(by=By.CLASS_NAME, value="nav-btn")[4].click()
         time.sleep(1)
 
@@ -73,7 +74,7 @@ def test_prompt_functionality():
         test4 = len(driver.find_elements(by=By.CLASS_NAME, value="book")) == 3
 
         # delete the book we just added with bookid
-        driver.execute_async_script(f"document.getElementById('{bookId}').getElementsByClassName('delete')[0].click()")
+        driver.execute_script(f"document.getElementById('{bookId}').getElementsByClassName('delete')[0].click()")
         time.sleep(1)
 
         # check if there are 2 books in the bookshelf
